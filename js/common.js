@@ -222,8 +222,12 @@ function setupFooterSubscribeForm() {
     }
 
     // Clear and redirect
-    emailInput.value = '';
-    window.location.href = "404.html";
+   emailInput.value = '';
+    if (window.location.pathname.includes('/html/')) {
+      window.location.href = "404.html";
+    } else {
+      window.location.href = "html/404.html";
+    }
   });
 
   // Clear email input when returning to the page (history back/forward)
