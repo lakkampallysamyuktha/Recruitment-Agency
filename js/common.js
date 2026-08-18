@@ -206,7 +206,6 @@ function setupFooterSubscribeForm() {
 
     const emailValue = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!emailValue) {
       msgContainer.textContent = 'Please enter your email address.';
       msgContainer.className = 'form-feedback-msg error';
