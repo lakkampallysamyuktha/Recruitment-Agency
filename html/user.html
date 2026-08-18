@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard – Stackly</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+
+    <style>
+        /* ==========================================
+           GLOBAL CSS (subset from global.css)
+           ========================================== */
+        :root {
+            --color-white: #FFFFFF;
+            --color-burgundy: #8B0F3A;
+            --color-charcoal: #151722;
+            --color-burgundy-hover: #720b2f;
+            --color-charcoal-hover: #212433;
+            --color-charcoal-muted: #2d3043;
+            --color-text-dark: #151722;
+            --color-text-muted: #5c6075;
+            --color-text-light: #ffffff;
+            --font-open-sans: 'Open Sans', sans-serif;
+            --font-serif-heading: 'Playfair Display', serif;
+            --font-primary: 'Inter', sans-serif;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(21, 23, 34, 0.06);
+            --shadow-md: 0 8px 24px rgba(21, 23, 34, 0.08);
+            --shadow-lg: 0 16px 48px rgba(21, 23, 34, 0.10);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: #f4f6fa;
+            color: var(--color-text-dark);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================
+           SCROLLBAR
+           ========================================== */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-burgundy);
+            border-radius: 10px;
+        }
+
+        /* ==========================================
+           SIDEBAR
+           ========================================== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 260px;
+            background: var(--color-white);
+            border-right: 1px solid rgba(21, 23, 34, 0.06);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 24px 22px 16px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .sidebar-logo-link img {
+            height: 36px;
+            width: auto;
+        }
+
+        .sidebar-logo-link span {
+            font-family: var(--font-serif-heading);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            letter-spacing: -0.3px;
+        }
+
+        /* Role Chip */
+        .role-chip {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: rgba(139, 15, 58, 0.10);
+            color: var(--color-burgundy);
+            border: 1px solid rgba(139, 15, 58, 0.15);
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 18px 12px;
+        }
+
+        /* Custom scrollbar styling for WebKit (Chrome, Safari, Edge) */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(139, 15, 58, 0.22);
+            border-radius: 10px;
+            transition: background var(--transition-fast);
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 15, 58, 0.5);
+        }
+
+        .sidebar-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-bottom: 32px;
+        }
+
+        .sidebar-nav li {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            border-radius: var(--radius-sm);
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sidebar-nav li:hover {
+            background: rgba(139, 15, 58, 0.06);
+            color: var(--color-charcoal);
+        }
+
+        .sidebar-nav li.active {
+            background: rgba(139, 15, 58, 0.10);
+            color: var(--color-burgundy);
+            font-weight: 600;
+        }
+
+        .sidebar-nav li.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 28px;
+            background: var(--color-burgundy);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .sidebar-nav li svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sidebar-nav li.active svg {
+            stroke: var(--color-burgundy);
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 16px 22px 24px;
+            border-top: 1px solid rgba(21, 23, 34, 0.06);
+            flex-shrink: 0;
+        }
+
+        .sidebar-email {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-email svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            stroke: var(--color-text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            width: 100%;
+            background: rgba(21, 23, 34, 0.04);
+        }
+
+        .btn-logout:hover {
+            background: rgba(139, 15, 58, 0.10);
+            color: var(--color-burgundy);
+        }
+
+        .btn-logout svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ==========================================
+           MAIN CONTENT
+           ========================================== */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 28px 36px 40px;
+            background: #f4f6fa;
+        }
+
+        /* Top Bar */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .topbar-left h1 {
+            font-family: var(--font-serif-heading);
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+        }
+
+        .topbar-left p {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-date {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            background: var(--color-white);
+            padding: 8px 18px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Hamburger for mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: 6px;
+            background: var(--color-white);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: var(--color-charcoal);
+            border-radius: 4px;
+            transition: var(--transition-normal);
+        }
+
+        /* ==========================================
+           CONTENT SECTIONS (shown/hidden via JS)
+           ========================================== */
+        .page-content {
+            display: block;
+            animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-content.hidden {
+            display: none;
+        }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section spacing */
+        .content-section {
+            margin-bottom: 32px;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-family: var(--font-serif-heading);
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+            margin-bottom: 16px;
+        }
+
+        /* ==========================================
+           CARDS
+           ========================================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: var(--color-white);
+            padding: 20px 22px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .label {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .stat-card .value {
+            font-family: var(--font-serif-heading);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-top: 4px;
+        }
+
+        .stat-card .change {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .stat-card .change.up {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+
+        .stat-card .change.down {
+            background: rgba(239, 68, 68, 0.10);
+            color: #dc2626;
+        }
+
+        .stat-card .change.neutral {
+            background: rgba(139, 15, 58, 0.08);
+            color: var(--color-burgundy);
+        }
+
+        /* Chart containers */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-box {
+            background: var(--color-white);
+            padding: 20px 20px 12px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-box h4 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .chart-box canvas {
+            width: 100% !important;
+            max-height: 220px;
+        }
+
+        /* Full width chart */
+        .chart-box.full {
+            grid-column: 1 / -1;
+        }
+
+        /* Table / List */
+        .activity-list {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 8px 0;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 22px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+            font-size: 14px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .activity-item .dot.burgundy {
+            background: var(--color-burgundy);
+        }
+        .activity-item .dot.green {
+            background: #16a34a;
+        }
+        .activity-item .dot.orange {
+            background: #f59e0b;
+        }
+        .activity-item .dot.blue {
+            background: #3b82f6;
+        }
+        .activity-item .dot.purple {
+            background: #7c3aed;
+        }
+        .activity-item .dot.pink {
+            background: #db2777;
+        }
+
+        .activity-item .time {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        /* Job cards */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .job-card {
+            background: var(--color-white);
+            padding: 18px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border-left: 3px solid var(--color-burgundy);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .job-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        .job-card p {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        .job-card .badge {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 14px;
+            border-radius: 20px;
+            background: rgba(139, 15, 58, 0.08);
+            color: var(--color-burgundy);
+        }
+
+        .job-card .badge.closed {
+            background: rgba(21, 23, 34, 0.06);
+            color: var(--color-text-muted);
+        }
+
+        /* Candidate table */
+        .candidate-table-wrap {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+            padding: 4px 0;
+        }
+
+        .candidate-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .candidate-table th {
+            text-align: left;
+            padding: 14px 20px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+        }
+
+        .candidate-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+            color: var(--color-charcoal);
+        }
+
+        .candidate-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .candidate-table .status-badge {
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .candidate-table .status-badge.active {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+        .candidate-table .status-badge.pending {
+            background: rgba(245, 158, 11, 0.12);
+            color: #d97706;
+        }
+        .candidate-table .status-badge.closed {
+            background: rgba(21, 23, 34, 0.06);
+            color: var(--color-text-muted);
+        }
+        .candidate-table .status-badge.review {
+            background: rgba(59, 130, 246, 0.12);
+            color: #2563eb;
+        }
+        .candidate-table .status-badge.offer {
+            background: rgba(13, 148, 136, 0.12);
+            color: #0d9488;
+        }
+
+        /* Settings */
+        .settings-group {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .settings-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-group h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-bottom: 6px;
+        }
+
+        .settings-group p {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row .label {
+            font-size: 14px;
+            color: var(--color-charcoal);
+        }
+
+        .settings-row .desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        /* Toggle switch */
+        .toggle {
+            width: 44px;
+            height: 24px;
+            border-radius: 30px;
+            background: #d1d5db;
+            transition: var(--transition-normal);
+            position: relative;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .toggle.active {
+            background: var(--color-burgundy);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-white);
+            transition: var(--transition-normal);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle.active::after {
+            left: 22px;
+        }
+
+        /* Extra: Quick action chips */
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .quick-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--color-white);
+            color: var(--color-charcoal);
+            border: 1px solid rgba(21, 23, 34, 0.08);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .quick-chip:hover {
+            background: var(--color-burgundy);
+            color: var(--color-white) !important;
+            border-color: var(--color-burgundy);
+            transform: translateY(-2px);
+        }
+
+        /* Department mini cards */
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+        }
+
+        .dept-card {
+            background: var(--color-white);
+            padding: 16px 18px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border-top: 3px solid var(--color-burgundy);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .dept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .dept-card .dept-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        .dept-card .dept-value {
+            font-family: var(--font-serif-heading);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--color-burgundy);
+            margin-top: 4px;
+        }
+
+        .dept-card .dept-change {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+        }
+
+        .dept-card .dept-change.up {
+            color: #16a34a;
+        }
+        .dept-card .dept-change.down {
+            color: #dc2626;
+        }
+
+        /* Connected accounts */
+        .connected-account {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+        }
+
+        .connected-account:last-child {
+            border-bottom: none;
+        }
+
+        .connected-account .acct-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(139, 15, 58, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-burgundy);
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .connected-account .acct-info {
+            flex: 1;
+        }
+
+        .connected-account .acct-info .acct-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+        }
+
+        .connected-account .acct-info .acct-desc {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .connected-account .acct-status {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        .connected-account .acct-status.connected {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+
+        .connected-account .acct-status.disconnected {
+            background: rgba(21, 23, 34, 0.06);
+            color: var(--color-text-muted);
+        }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media (max-width: 1024px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-box.full {
+                grid-column: 1;
+            }
+        }
+
+        /* Sidebar close button styling */
+        .sidebar-close-btn {
+            display: none;
+        }
+
+        .desktop-header-info {
+            display: block;
+        }
+
+        .mobile-header-info {
+            display: none;
+        }
+
+        @media (max-width: 860px) {
+            .sidebar-close-btn {
+                display: block;
+                position: absolute;
+                top: 24px;
+                right: 24px;
+                font-size: 32px;
+                font-weight: 300;
+                line-height: 1;
+                color: var(--color-charcoal);
+                cursor: pointer;
+                border: none;
+                background: transparent;
+                z-index: 1001;
+            }
+
+            .sidebar-header {
+                position: relative;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 100%; /* Full width mobile drawer */
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 84px 18px 32px; /* Add padding for fixed topbar */
+            }
+
+            .topbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 64px;
+                background: var(--color-white);
+                border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+                box-shadow: var(--shadow-sm);
+                padding: 0 20px;
+                display: flex;
+                flex-direction: row !important; /* Force side-by-side on mobile */
+                align-items: center;
+                justify-content: space-between;
+                z-index: 990;
+            }
+
+            .desktop-header-info {
+                display: none;
+            }
+
+            .mobile-header-info {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .mobile-topbar-logo {
+                height: 28px;
+                width: auto;
+            }
+
+            .mobile-topbar-greeting {
+                font-size: 14.5px;
+                font-weight: 600;
+                color: var(--color-charcoal);
+            }
+
+            .topbar-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .topbar-date {
+                display: none; /* Hide date on mobile to keep space clean */
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dept-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+            .dept-grid {
+                grid-template-columns: 1fr;
+            }
+            .topbar {
+                padding: 0 16px;
+            }
+            .candidate-table th,
+            .candidate-table td {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+            .settings-group {
+                padding: 16px 18px;
+            }
+            .quick-chips {
+                gap: 8px;
+            }
+            .quick-chip {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+        }
+
+        /* Overlay for mobile */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(21, 23, 34, 0.4);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .sidebar-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+    SIDEBAR OVERLAY (mobile)
+    ========================================== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==========================================
+    SIDEBAR
+    ========================================== -->
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Header: Logo + Role Chip -->
+        <div class="sidebar-header">
+            <a href="../index.html" class="sidebar-logo-link">
+                <img src="../assets/logo.webp" alt="Stackly" />
+            </a>
+            <!-- Sidebar Close Toggle Button for Mobile Drawer -->
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">&times;</button>
+            <div class="role-chip">USER</div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            <ul id="navList">
+                <li class="active" data-page="dashboard">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    Dashboard
+                </li>
+                <li data-page="analytics">
+                    <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                    Analytics
+                </li>
+                <li data-page="candidates">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Candidates
+                </li>
+                <li data-page="jobs">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    Jobs
+                </li>
+                <li data-page="reports">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    Reports
+                </li>
+                <li data-page="messages">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Messages
+                </li>
+                <li data-page="settings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    Settings
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Footer: Email + Logout -->
+        <div class="sidebar-footer">
+            <div class="sidebar-email">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span id="userEmail">user@stackly.com</span>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- ==========================================
+    MAIN CONTENT
+    ========================================== -->
+    <main class="main-content" id="mainContent">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <!-- Desktop View Header Info -->
+                <div class="desktop-header-info">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="pageSub">Welcome back, <span id="userName">User</span> — here's your overview</p>
+                </div>
+                <!-- Mobile View Header Info -->
+                <div class="mobile-header-info">
+                    <img src="../assets/logo.webp" alt="Stackly Logo" class="mobile-topbar-logo" />
+                    <span class="mobile-topbar-greeting">Hi, <span class="mobile-username-placeholder">User</span></span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <span class="topbar-date" id="todayDate"></span>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle sidebar">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==========================================
+        PAGE: DASHBOARD
+        ========================================== -->
+        <div class="page-content" id="page-dashboard">
+
+            <!-- Stats -->
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Total Candidates</div>
+                        <div class="value">1,284</div>
+                        <span class="change up">↑ 12%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Active Jobs</div>
+                        <div class="value">47</div>
+                        <span class="change up">↑ 8%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Interviews Scheduled</div>
+                        <div class="value">23</div>
+                        <span class="change neutral">• 0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Hires This Month</div>
+                        <div class="value">14</div>
+                        <span class="change up">↑ 22%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts -->
+            <section class="content-section">
+                <h3 class="section-title">Activity Overview</h3>
+                <div class="chart-grid">
+                    <div class="chart-box full">
+                        <h4>Applications Over Time</h4>
+                        <canvas id="dashLineChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="content-section">
+                <h3 class="section-title">Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>Sarah Chen</strong> applied for <strong>UX Designer</strong></span>
+                        <span class="time">12 min ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><strong>Michael Torres</strong> was hired for <strong>Frontend Developer</strong></span>
+                        <span class="time">1h ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><strong>Interview scheduled</strong> with <strong>Emily Park</strong></span>
+                        <span class="time">3h ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot blue"></span>
+                        <span><strong>New job posted:</strong> Product Manager</span>
+                        <span class="time">5h ago</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Top Performing Jobs -->
+            <section class="content-section">
+                <h3 class="section-title">Top Performing Jobs</h3>
+                <div class="job-grid">
+                    <div class="job-card">
+                        <h4>Senior UX Designer</h4>
+                        <p>12 applicants · 4 interviews</p>
+                        <span class="badge">⭐ High demand</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>Frontend Developer</h4>
+                        <p>8 applicants · 3 interviews</p>
+                        <span class="badge">🔥 Trending</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>Product Manager</h4>
+                        <p>5 applicants · 2 interviews</p>
+                        <span class="badge">📈 Growing</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==========================================
+        PAGE: ANALYTICS
+        ========================================== -->
+        <div class="page-content hidden" id="page-analytics">
+
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Conversion Rate</div>
+                        <div class="value">23.5%</div>
+                        <span class="change up">↑ 3.2%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Avg. Time to Hire</div>
+                        <div class="value">14d</div>
+                        <span class="change down">↓ 2d</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Applications</div>
+                        <div class="value">342</div>
+                        <span class="change up">↑ 18%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Offer Acceptance</div>
+                        <div class="value">87%</div>
+                        <span class="change up">↑ 5%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Hiring Funnel</h3>
+                <div class="chart-grid">
+                    <div class="chart-box">
+                        <h4>Applications by Source</h4>
+                        <canvas id="analyticsPieChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Monthly Hires</h4>
+                        <canvas id="analyticsBarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Key Insights</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>Referrals</strong> have the highest conversion rate at 34%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><strong>Time-to-hire</strong> improved by 2 days compared to last month</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><strong>Engineering</strong> roles receive 2.3× more applications than other departments</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Department Performance -->
+            <section class="content-section">
+                <h3 class="section-title">Department Performance</h3>
+                <div class="dept-grid">
+                    <div class="dept-card" style="border-top-color: #8B0F3A;">
+                        <div class="dept-name">Engineering</div>
+                        <div class="dept-value">42</div>
+                        <div class="dept-change up">↑ 14% hires</div>
+                    </div>
+                    <div class="dept-card" style="border-top-color: #3b82f6;">
+                        <div class="dept-name">Product</div>
+                        <div class="dept-value">22</div>
+                        <div class="dept-change up">↑ 8% hires</div>
+                    </div>
+                    <div class="dept-card" style="border-top-color: #0d9488;">
+                        <div class="dept-name">Design</div>
+                        <div class="dept-value">16</div>
+                        <div class="dept-change neutral">• 0%</div>
+                    </div>
+                    <div class="dept-card" style="border-top-color: #f59e0b;">
+                        <div class="dept-name">Marketing</div>
+                        <div class="dept-value">12</div>
+                        <div class="dept-change down">↓ 4% hires</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==========================================
+        PAGE: CANDIDATES
+        ========================================== -->
+        <div class="page-content hidden" id="page-candidates">
+
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Total Candidates</div>
+                        <div class="value">1,284</div>
+                        <span class="change up">↑ 12%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Active</div>
+                        <div class="value">876</div>
+                        <span class="change up">↑ 8%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">New This Week</div>
+                        <div class="value">34</div>
+                        <span class="change up">↑ 6%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Hired</div>
+                        <div class="value">142</div>
+                        <span class="change up">↑ 15%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Candidate List</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr><th>Name</th><th>Role</th><th>Status</th><th>Applied</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Sarah Chen</strong></td>
+                                <td>UX Designer</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>2 days ago</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Michael Torres</strong></td>
+                                <td>Frontend Developer</td>
+                                <td><span class="status-badge closed">Hired</span></td>
+                                <td>1 week ago</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Emily Park</strong></td>
+                                <td>Product Manager</td>
+                                <td><span class="status-badge pending">Interview</span></td>
+                                <td>3 days ago</td>
+                            </tr>
+                            <tr>
+                                <td><strong>James Lee</strong></td>
+                                <td>Backend Engineer</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>5 days ago</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Priya Sharma</strong></td>
+                                <td>Data Analyst</td>
+                                <td><span class="status-badge review">Review</span></td>
+                                <td>1 day ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Status Breakdown</h3>
+                <div class="chart-grid">
+                    <div class="chart-box full">
+                        <canvas id="candidateStatusChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Candidate Source Breakdown -->
+            <section class="content-section">
+                <h3 class="section-title">Candidate Source Breakdown</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>LinkedIn</strong> — 342 candidates</span>
+                        <span class="time">27%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot blue"></span>
+                        <span><strong>Referrals</strong> — 218 candidates</span>
+                        <span class="time">17%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><strong>Job Boards</strong> — 196 candidates</span>
+                        <span class="time">15%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><strong>Career Site</strong> — 154 candidates</span>
+                        <span class="time">12%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot purple"></span>
+                        <span><strong>Agencies</strong> — 92 candidates</span>
+                        <span class="time">7%</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==========================================
+        PAGE: JOBS
+        ========================================== -->
+        <div class="page-content hidden" id="page-jobs">
+
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Total Jobs</div>
+                        <div class="value">47</div>
+                        <span class="change up">↑ 8%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Open</div>
+                        <div class="value">32</div>
+                        <span class="change up">↑ 5%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Filled</div>
+                        <div class="value">15</div>
+                        <span class="change neutral">• 0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Applications</div>
+                        <div class="value">342</div>
+                        <span class="change up">↑ 18%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Open Positions</h3>
+                <div class="job-grid">
+                    <div class="job-card">
+                        <h4>Senior UX Designer</h4>
+                        <p>Product · Full-time</p>
+                        <span class="badge">12 applicants</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>Frontend Developer</h4>
+                        <p>Engineering · Full-time</p>
+                        <span class="badge">8 applicants</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>Product Manager</h4>
+                        <p>Product · Full-time</p>
+                        <span class="badge">5 applicants</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>Data Analyst</h4>
+                        <p>Analytics · Contract</p>
+                        <span class="badge">3 applicants</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>Backend Engineer</h4>
+                        <p>Engineering · Full-time</p>
+                        <span class="badge">9 applicants</span>
+                    </div>
+                    <div class="job-card">
+                        <h4>HR Business Partner</h4>
+                        <p>People · Full-time</p>
+                        <span class="badge">4 applicants</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Applications Overview</h3>
+                <div class="chart-grid">
+                    <div class="chart-box full">
+                        <canvas id="jobsApplicationsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Job Status Distribution -->
+            <section class="content-section">
+                <h3 class="section-title">Job Status Distribution</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><strong>Open</strong> — 32 positions</span>
+                        <span class="time">68%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><strong>In Review</strong> — 8 positions</span>
+                        <span class="time">17%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot blue"></span>
+                        <span><strong>Interviewing</strong> — 5 positions</span>
+                        <span class="time">11%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>On Hold</strong> — 2 positions</span>
+                        <span class="time">4%</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==========================================
+        PAGE: REPORTS
+        ========================================== -->
+        <div class="page-content hidden" id="page-reports">
+
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Retention Rate</div>
+                        <div class="value">94%</div>
+                        <span class="change up">↑ 3%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Avg. Time to Fill</div>
+                        <div class="value">18d</div>
+                        <span class="change down">↓ 2d</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Satisfaction Score</div>
+                        <div class="value">4.8</div>
+                        <span class="change up">↑ 0.2</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Diversity Index</div>
+                        <div class="value">72%</div>
+                        <span class="change up">↑ 5%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Performance Metrics</h3>
+                <div class="chart-grid">
+                    <div class="chart-box">
+                        <h4>Monthly Performance</h4>
+                        <canvas id="reportsLineChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Department Breakdown</h4>
+                        <canvas id="reportsDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Export &amp; Insights</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>Q4 Report</strong> is ready for download</span>
+                        <span class="time">Download</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><strong>Diversity metrics</strong> improved across all departments</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><strong>Engineering</strong> shows highest retention at 96%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Quarterly Comparison -->
+            <section class="content-section">
+                <h3 class="section-title">Quarterly Comparison</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Q1 2025</div>
+                        <div class="value">42</div>
+                        <span class="change up">↑ 12%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Q2 2025</div>
+                        <div class="value">48</div>
+                        <span class="change up">↑ 14%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Q3 2025</div>
+                        <div class="value">51</div>
+                        <span class="change up">↑ 6%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Q4 2025</div>
+                        <div class="value">56</div>
+                        <span class="change up">↑ 10%</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==========================================
+        PAGE: MESSAGES
+        ========================================== -->
+        <div class="page-content hidden" id="page-messages">
+
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Unread</div>
+                        <div class="value">8</div>
+                        <span class="change up">↑ 3</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Total Messages</div>
+                        <div class="value">124</div>
+                        <span class="change neutral">• 0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Notifications</div>
+                        <div class="value">5</div>
+                        <span class="change up">↑ 2</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Alerts</div>
+                        <div class="value">2</div>
+                        <span class="change down">↓ 1</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Recent Messages</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>Hannah Kim</strong> — "I'm interested in the UX position..."</span>
+                        <span class="time">15 min ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><strong>David Okafor</strong> — "Thank you for the interview opportunity!"</span>
+                        <span class="time">2h ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><strong>System</strong> — "New application received for Frontend Dev"</span>
+                        <span class="time">4h ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot blue"></span>
+                        <span><strong>Lisa Wang</strong> — "Can we reschedule the meeting?"</span>
+                        <span class="time">6h ago</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Notifications &amp; Alerts</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>🔔</strong> 3 candidates are waiting for feedback</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> 2 job posts are about to expire</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:6px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Weekly report is ready</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Quick Actions -->
+            <section class="content-section">
+                <h3 class="section-title">Quick Actions</h3>
+                <div class="quick-chips">
+                    <a href="404.html" class="quick-chip">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Compose Message
+                    </a>
+                    <a href="404.html" class="quick-chip">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><line x1="9" y1="12" x2="15" y2="12"></line><line x1="9" y1="16" x2="15" y2="16"></line></svg>
+                        View All Notifications
+                    </a>
+                    <a href="404.html" class="quick-chip">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        Mark All as Read
+                    </a>
+                    <a href="404.html" class="quick-chip">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        Message Analytics
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==========================================
+        PAGE: SETTINGS
+        ========================================== -->
+        <div class="page-content hidden" id="page-settings">
+
+            <section class="content-section">
+                <h3 class="section-title">Profile</h3>
+                <div class="settings-group">
+                    <h4>Personal Information</h4>
+                    <div class="settings-row">
+                        <span class="label">Name</span>
+                        <span class="desc">Alex Rivera</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="label">Email</span>
+                        <span class="desc" id="settingsEmail">user@stackly.com</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="label">Role</span>
+                        <span class="desc">User</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Preferences</h3>
+                <div class="settings-group">
+                    <div class="settings-row">
+                        <span class="label">Dark Mode</span>
+                        <div class="toggle" id="darkModeToggle"></div>
+                    </div>
+                    <div class="settings-row">
+                        <span class="label">Email Notifications</span>
+                        <div class="toggle active" id="emailToggle"></div>
+                    </div>
+                    <div class="settings-row">
+                        <span class="label">Weekly Digest</span>
+                        <div class="toggle active" id="digestToggle"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Security</h3>
+                <div class="settings-group">
+                    <div class="settings-row">
+                        <span class="label">Two-Factor Authentication</span>
+                        <div class="toggle" id="twoFactorToggle"></div>
+                    </div>
+                    <div class="settings-row">
+                        <span class="label">Change Password</span>
+                        <span class="desc"><a href="404.html" style="color:var(--color-burgundy);font-weight:500;">Update</a></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW: Connected Accounts -->
+            <section class="content-section">
+                <h3 class="section-title">Connected Accounts</h3>
+                <div class="settings-group">
+                    <div class="connected-account">
+                        <div class="acct-icon">G</div>
+                        <div class="acct-info">
+                            <div class="acct-name">Google</div>
+                            <div class="acct-desc">alex.rivera@gmail.com</div>
+                        </div>
+                        <span class="acct-status connected">Connected</span>
+                    </div>
+                    <div class="connected-account">
+                        <div class="acct-icon">L</div>
+                        <div class="acct-info">
+                            <div class="acct-name">LinkedIn</div>
+                            <div class="acct-desc">alex-rivera</div>
+                        </div>
+                        <span class="acct-status connected">Connected</span>
+                    </div>
+                    <div class="connected-account">
+                        <div class="acct-icon">X</div>
+                        <div class="acct-info">
+                            <div class="acct-name">X (Twitter)</div>
+                            <div class="acct-desc">@alex_rivera</div>
+                        </div>
+                        <span class="acct-status disconnected">Disconnected</span>
+                    </div>
+                    <div class="connected-account">
+                        <div class="acct-icon">S</div>
+                        <div class="acct-info">
+                            <div class="acct-name">Slack</div>
+                            <div class="acct-desc">alex.rivera@stackly.com</div>
+                        </div>
+                        <span class="acct-status connected">Connected</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- ==========================================
+    JAVASCRIPT
+    ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // =============================================
+            // 1. SIDEBAR TOGGLE (mobile)
+            // =============================================
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerBtn');
+            const closeBtn = document.getElementById('sidebarCloseBtn');
+
+            function toggleSidebar() {
+                const isOpen = sidebar.classList.toggle('open');
+                overlay.classList.toggle('open', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+
+            hamburger.addEventListener('click', toggleSidebar);
+            if (closeBtn) closeBtn.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                    toggleSidebar();
+                }
+            });
+
+            // =============================================
+            // 2. NAVIGATION
+            // =============================================
+            const navItems = document.querySelectorAll('#navList li');
+            const pages = {
+                dashboard: document.getElementById('page-dashboard'),
+                analytics: document.getElementById('page-analytics'),
+                candidates: document.getElementById('page-candidates'),
+                jobs: document.getElementById('page-jobs'),
+                reports: document.getElementById('page-reports'),
+                messages: document.getElementById('page-messages'),
+                settings: document.getElementById('page-settings'),
+            };
+
+            const pageTitles = {
+                dashboard: 'Dashboard',
+                analytics: 'Analytics',
+                candidates: 'Candidates',
+                jobs: 'Jobs',
+                reports: 'Reports',
+                messages: 'Messages',
+                settings: 'Settings',
+            };
+
+            const pageSubs = {
+                dashboard: 'Welcome back, <span id="userName">User</span> — here\'s your overview',
+                analytics: 'Dive into your hiring metrics and trends',
+                candidates: 'Manage and track your candidate pipeline',
+                jobs: 'View and manage all job openings',
+                reports: 'Performance reports and insights',
+                messages: 'All your messages and notifications',
+                settings: 'Manage your account preferences',
+            };
+
+            function navigateTo(pageId) {
+                Object.values(pages).forEach(p => p.classList.add('hidden'));
+
+                if (pages[pageId]) {
+                    pages[pageId].classList.remove('hidden');
+                    pages[pageId].style.animation = 'none';
+                    requestAnimationFrame(() => {
+                        pages[pageId].style.animation = '';
+                    });
+                }
+
+                navItems.forEach(item => item.classList.remove('active'));
+                const activeNav = document.querySelector(`#navList li[data-page="${pageId}"]`);
+                if (activeNav) activeNav.classList.add('active');
+
+                document.getElementById('pageTitle').textContent = pageTitles[pageId] || pageId;
+                document.getElementById('pageSub').innerHTML = pageSubs[pageId] || '';
+
+                if (sidebar.classList.contains('open')) {
+                    toggleSidebar();
+                }
+
+                setTimeout(() => renderChartsForPage(pageId), 100);
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const page = item.dataset.page;
+                    if (page) navigateTo(page);
+                });
+            });
+
+            // =============================================
+            // 3. LOGOUT
+            // =============================================
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('auth_email');
+                localStorage.removeItem('auth_username');
+                localStorage.removeItem('auth_role');
+                window.location.href = '../index.html';
+            });
+
+            // =============================================
+            // 4. USER INFO
+            // =============================================
+            const storedEmail = localStorage.getItem('auth_email') || 'user@stackly.com';
+            let firstname = storedEmail.split('@')[0];
+            firstname = firstname.charAt(0).toUpperCase() + firstname.slice(1);
+
+            const userHTML = `<span style="color: var(--color-burgundy); font-weight: 700;">${firstname}</span>`;
+
+            document.getElementById('userEmail').textContent = storedEmail;
+            
+            // Update settings email helper if it exists
+            const settingsEmailEl = document.getElementById('settingsEmail');
+            if (settingsEmailEl) {
+                settingsEmailEl.textContent = storedEmail;
+            }
+
+            document.getElementById('userName').innerHTML = userHTML;
+
+            // Set mobile greeting placeholder
+            const mobilePlaceholder = document.querySelector('.mobile-username-placeholder');
+            if (mobilePlaceholder) {
+                mobilePlaceholder.innerHTML = userHTML;
+            }
+
+            // Update pageSubs dashboard template dynamically
+            pageSubs.dashboard = `Welcome back, ${userHTML} — here's your overview`;
+            document.getElementById('pageSub').innerHTML = pageSubs.dashboard;
+
+            // =============================================
+            // 5. DATE
+            // =============================================
+            const now = new Date();
+            const opts = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+            document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US', opts);
+
+            // =============================================
+            // 6. CHARTS
+            // =============================================
+            let chartInstances = {};
+
+            function getChartContext(id) {
+                const canvas = document.getElementById(id);
+                if (!canvas) return null;
+                if (chartInstances[id]) {
+                    chartInstances[id].destroy();
+                    delete chartInstances[id];
+                }
+                return canvas.getContext('2d');
+            }
+
+            const colors = {
+                burgundy: '#8B0F3A',
+                burgundyLight: 'rgba(139,15,58,0.15)',
+                burgundyMedium: 'rgba(139,15,58,0.35)',
+                charcoal: '#151722',
+                charcoalLight: 'rgba(21,23,34,0.08)',
+                gray: '#5c6075',
+                grayLight: 'rgba(92,96,117,0.15)',
+                green: '#16a34a',
+                orange: '#f59e0b',
+                blue: '#3b82f6',
+                teal: '#0d9488',
+                purple: '#7c3aed',
+                pink: '#db2777',
+                white: '#FFFFFF',
+            };
+
+            const chartColors = [
+                colors.burgundy,
+                colors.blue,
+                colors.teal,
+                colors.orange,
+                colors.purple,
+                colors.green,
+                colors.pink,
+                colors.gray,
+            ];
+
+            function renderChartsForPage(pageId) {
+                switch (pageId) {
+                    case 'dashboard':
+                        renderDashCharts();
+                        break;
+                    case 'analytics':
+                        renderAnalyticsCharts();
+                        break;
+                    case 'candidates':
+                        renderCandidatesCharts();
+                        break;
+                    case 'jobs':
+                        renderJobsCharts();
+                        break;
+                    case 'reports':
+                        renderReportsCharts();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            function renderDashCharts() {
+                const ctx = getChartContext('dashLineChart');
+                if (!ctx) return;
+                chartInstances['dashLineChart'] = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Applications',
+                            data: [45, 52, 48, 61, 58, 72, 68, 82, 78, 94, 88, 102],
+                            borderColor: colors.burgundy,
+                            backgroundColor: 'rgba(139,15,58,0.06)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: colors.burgundy,
+                            pointBorderColor: colors.white,
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }, {
+                            label: 'Hires',
+                            data: [6, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15, 18],
+                            borderColor: colors.teal,
+                            backgroundColor: 'rgba(13,148,136,0.05)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: colors.teal,
+                            pointBorderColor: colors.white,
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: { boxWidth: 12, padding: 14, font: { size: 12 } }
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            function renderAnalyticsCharts() {
+                const ctxPie = getChartContext('analyticsPieChart');
+                if (ctxPie) {
+                    chartInstances['analyticsPieChart'] = new Chart(ctxPie, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Referrals', 'Job Boards', 'Social', 'Career Site', 'Agencies'],
+                            datasets: [{
+                                data: [34, 28, 18, 12, 8],
+                                backgroundColor: [colors.burgundy, colors.blue, colors.teal, colors.orange, colors.gray],
+                                borderColor: colors.white,
+                                borderWidth: 2,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 11 } } }
+                            },
+                            cutout: '60%',
+                        }
+                    });
+                }
+
+                const ctxBar = getChartContext('analyticsBarChart');
+                if (ctxBar) {
+                    chartInstances['analyticsBarChart'] = new Chart(ctxBar, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            datasets: [{
+                                label: 'Hires',
+                                data: [8, 10, 7, 12, 9, 14],
+                                backgroundColor: 'rgba(139,15,58,0.65)',
+                                borderColor: colors.burgundy,
+                                borderWidth: 1.5,
+                                borderRadius: 4,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                                x: { grid: { display: false } }
+                            }
+                        }
+                    });
+                }
+            }
+
+            function renderCandidatesCharts() {
+                const ctx = getChartContext('candidateStatusChart');
+                if (!ctx) return;
+                chartInstances['candidateStatusChart'] = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Applied', 'Screening', 'Interview', 'Offer', 'Hired', 'Rejected'],
+                        datasets: [{
+                            label: 'Candidates',
+                            data: [420, 280, 160, 80, 142, 202],
+                            backgroundColor: [
+                                'rgba(139,15,58,0.5)',
+                                'rgba(59,130,246,0.5)',
+                                'rgba(245,158,11,0.5)',
+                                'rgba(13,148,136,0.5)',
+                                'rgba(22,163,74,0.5)',
+                                'rgba(92,96,117,0.4)',
+                            ],
+                            borderColor: [
+                                colors.burgundy, colors.blue, colors.orange, colors.teal, colors.green, colors.gray
+                            ],
+                            borderWidth: 1.5,
+                            borderRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            function renderJobsCharts() {
+                const ctx = getChartContext('jobsApplicationsChart');
+                if (!ctx) return;
+                chartInstances['jobsApplicationsChart'] = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Applications',
+                            data: [24, 32, 28, 40],
+                            borderColor: colors.burgundy,
+                            backgroundColor: 'rgba(139,15,58,0.06)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: colors.burgundy,
+                            pointBorderColor: colors.white,
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }, {
+                            label: 'Interviews',
+                            data: [6, 10, 8, 14],
+                            borderColor: colors.blue,
+                            backgroundColor: 'rgba(59,130,246,0.06)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: colors.blue,
+                            pointBorderColor: colors.white,
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: { boxWidth: 12, padding: 14, font: { size: 12 } }
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            function renderReportsCharts() {
+                const ctxLine = getChartContext('reportsLineChart');
+                if (ctxLine) {
+                    chartInstances['reportsLineChart'] = new Chart(ctxLine, {
+                        type: 'line',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            datasets: [{
+                                label: 'Retention %',
+                                data: [88, 89, 91, 92, 93, 94],
+                                borderColor: colors.green,
+                                backgroundColor: 'rgba(22,163,74,0.06)',
+                                fill: true,
+                                tension: 0.3,
+                                pointBackgroundColor: colors.green,
+                                pointBorderColor: colors.white,
+                                pointBorderWidth: 2,
+                                pointRadius: 4,
+                            }, {
+                                label: 'Satisfaction',
+                                data: [4.2, 4.3, 4.5, 4.6, 4.7, 4.8],
+                                borderColor: colors.burgundy,
+                                backgroundColor: 'rgba(139,15,58,0.06)',
+                                fill: true,
+                                tension: 0.3,
+                                pointBackgroundColor: colors.burgundy,
+                                pointBorderColor: colors.white,
+                                pointBorderWidth: 2,
+                                pointRadius: 4,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                    labels: { boxWidth: 12, padding: 14, font: { size: 12 } }
+                                }
+                            },
+                            scales: {
+                                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                                x: { grid: { display: false } }
+                            }
+                        }
+                    });
+                }
+
+                const ctxDoughnut = getChartContext('reportsDoughnutChart');
+                if (ctxDoughnut) {
+                    chartInstances['reportsDoughnutChart'] = new Chart(ctxDoughnut, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Engineering', 'Product', 'Design', 'Marketing', 'HR'],
+                            datasets: [{
+                                data: [42, 22, 16, 12, 8],
+                                backgroundColor: [
+                                    colors.burgundy,
+                                    colors.blue,
+                                    colors.teal,
+                                    colors.orange,
+                                    colors.gray
+                                ],
+                                borderColor: colors.white,
+                                borderWidth: 2,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 11 } } }
+                            },
+                            cutout: '55%',
+                        }
+                    });
+                }
+            }
+
+            // =============================================
+            // 7. TOGGLES
+            // =============================================
+            document.querySelectorAll('.toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+
+            // =============================================
+            // 8. INIT
+            // =============================================
+            navigateTo('dashboard');
+
+        });
+    </script>
+
+</body>
+</html>

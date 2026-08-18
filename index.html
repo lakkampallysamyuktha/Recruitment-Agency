@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly - Discover Your Profession, Forge Your Path</title>
+  <meta name="description" content="Through open communication, flexible work arrangements, and a focus on individual growth, our team members to thrive and contribute their best.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Reusable Common Header -->
+  <div id="common-header">
+    <header class="site-header">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="index.html" class="header-logo-link" id="nav-logo-link">
+          <img src="assets/logo.webp" alt="Stackly Logo" class="header-logo" id="nav-logo-img">
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="header-nav" aria-label="Main Navigation">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+            <li class="nav-item"><a href="html/about.html" class="nav-link" id="nav-about">About</a></li>
+            <li class="nav-item"><a href="html/service.html" class="nav-link" id="nav-service">Service</a></li>
+            <li class="nav-item"><a href="html/blog.html" class="nav-link" id="nav-blog">Blog</a></li>
+            <li class="nav-item"><a href="html/contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Login & Signup Buttons -->
+        <div class="header-actions">
+          <a href="html/login.html" class="btn btn-login">Login</a>
+          <a href="html/signup.html" class="btn btn-signup">Signup</a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Drawer Menu -->
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-header">
+          <img src="assets/logo.webp" alt="Stackly Logo" class="mobile-logo" id="mobile-logo-img">
+          <button class="mobile-close-btn" id="mobile-close-toggle" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="mobile-nav">
+          <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link" id="mobile-nav-home">Home</a></li>
+            <li><a href="html/about.html" class="mobile-nav-link" id="mobile-nav-about">About</a></li>
+            <li><a href="html/service.html" class="mobile-nav-link" id="mobile-nav-service">Service</a></li>
+            <li><a href="html/blog.html" class="mobile-nav-link" id="mobile-nav-blog">Blog</a></li>
+            <li><a href="html/contact.html" class="mobile-nav-link" id="mobile-nav-contact">Contact</a></li>
+          </ul>
+          <div class="mobile-actions">
+            <a href="html/login.html" class="btn btn-login mobile-btn">Login</a>
+            <a href="html/signup.html" class="btn btn-signup mobile-btn">Signup</a>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile-menu-backdrop" id="mobile-backdrop"></div>
+    </header>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        
+        <!-- Left Text Layout -->
+        <div class="hero-text-layout">
+          <div class="hero-content-box">
+            <div class="hero-title-group">
+              <span class="hero-subtitle">Welcome to stackly</span>
+              <h1 class="hero-title">Discover Your<br>Profession, Forge<br>Your Path</h1>
+            </div>
+            <p class="hero-description">
+              Through open communication, flexible work<br>arrangements, and a focus on individual growth,<br>our team members to thrive and contribute their<br>best.
+            </p>
+          </div>
+          
+          <!-- Hero Action Buttons -->
+          <div class="hero-btn-layout">
+            <a href="html/404.html" class="btn btn-discover">Discover Jobs</a>
+            <a href="html/404.html" class="btn btn-consultation">Free consultation</a>
+          </div>
+        </div>
+
+        <!-- Right Side Image + Floating Cards Layout -->
+        <div class="hero-visual-layout">
+          <div class="hero-image-wrapper">
+            <img src="assets/home/hero_img.webp" alt="Professional recruitment environment at Stackly" class="hero-main-img">
+            
+            <!-- 85+ Successful Jobs Card -->
+            <div class="stat-card jobs-card">
+              <div class="jobs-card-num">85+</div>
+              <div class="jobs-card-text">Successfull<br>jobs</div>
+            </div>
+
+            <!-- Talent Request Card -->
+            <div class="stat-card talent-card">
+              <h3 class="talent-title">Talent Request</h3>
+              <div class="talent-count">16</div>
+              <div class="talent-stats">
+                <div class="talent-left-stats">
+                  <span>10 Women</span>
+                  <span>6 Men</span>
+                </div>
+                <div class="talent-right-stats">
+                  <span class="talent-growth">+5% Past Month</span>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- We Grow Careers Section -->
+    <section class="we-grow-section" id="we-grow-section">
+      <div class="we-grow-container">
+        
+        <!-- Left Images & Avatar Badge Column -->
+        <div class="we-grow-visuals reveal-from-left">
+          <!-- Image 1 Column -->
+          <div class="grow-col-1">
+            <img src="assets/home/we_grow_1.webp" alt="Recruitment consultation meeting" class="grow-img-1">
+          </div>
+
+          <!-- Image 2 + 50k Users Badge Column -->
+          <div class="grow-col-2">
+            <img src="assets/home/we_grow_2.webp" alt="Professional business partners discussing career paths" class="grow-img-2">
+            
+            <!-- 50k Active Users Card -->
+            <div class="active-users-card reveal-from-bottom">
+              <div class="avatar-stack">
+                <img src="assets/home/ring_img_1.webp" alt="Active User 1" class="avatar-img">
+                <img src="assets/home/ring_img_2.webp" alt="Active User 2" class="avatar-img">
+                <img src="assets/home/ring_img_3.webp" alt="Active User 3" class="avatar-img">
+              </div>
+              <div class="users-card-text">50k active users</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Content Layout -->
+        <div class="we-grow-content">
+          <div class="we-grow-text-box">
+            <h2 class="we-grow-title reveal-from-right">
+              We grow careers and<br>companies by connecting<br>the right people
+            </h2>
+            <p class="we-grow-desc reveal-from-right delay-1">
+              Recruitment services, often provided by specialized agencies or<br>firms, offer organizations assistance in identifying, attracting, and<br>hiring suitable candidates for their job openings.
+            </p>
+          </div>
+          <div class="we-grow-btn-box reveal-from-bottom delay-2">
+            <a href="html/about.html" class="btn btn-learn-more">Learn more</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigating The Human Resource Section -->
+    <section class="navigate-hr-section" id="navigate-hr-section">
+      <div class="navigate-hr-container">
+        
+        <!-- Left Panel Layout -->
+        <div class="navigate-left-panel">
+          <h2 class="navigate-title reveal-from-left">
+            Navigating The Human<br>Resource
+          </h2>
+          <div class="navigate-img-wrapper reveal-from-left delay-1">
+            <img src="assets/home/navigate_img.webp" alt="Human resource interview and candidate consultation" class="navigate-img">
+          </div>
+        </div>
+
+        <!-- Right Panel Layout -->
+        <div class="navigate-right-panel">
+          <!-- Text Paragraphs -->
+          <div class="navigate-text-box">
+            <p class="navigate-desc reveal-from-right">
+              Recruitment services, often provided by specialized agencies or firms, offer organizations assistance in identifying, attracting, hiring suitable candidates for their job openings.
+            </p>
+            <p class="navigate-desc reveal-from-right delay-1">
+              These services can be particularly beneficial for companies that lack the time, resources, or expertise to handle the recruitment process internally. Here's an overview of the benefits and key features.
+            </p>
+          </div>
+
+          <!-- Stats Grid (2x2) -->
+          <div class="navigate-stats-grid" id="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number"><span class="stat-count" data-target="10" data-suffix="+">10</span><span class="stat-suffix stat-suffix--sm">+</span></div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number"><span class="stat-count" data-target="20" data-suffix="">20</span><span class="stat-suffix stat-suffix--sm">K</span></div>
+              <div class="stat-label">Offers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number"><span class="stat-count" data-target="600" data-suffix="+">600</span><span class="stat-suffix stat-suffix--sm">+</span></div>
+              <div class="stat-label">Satisfied Clients</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number"><span class="stat-count" data-target="60" data-suffix="+">60</span><span class="stat-suffix stat-suffix--sm">+</span></div>
+              <div class="stat-label">Team Members</div>
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+    <!-- Explore Services Section -->
+    <section class="explore-services-section" id="explore-services-section">
+      <div class="explore-services-container">
+        
+        <!-- Text Container Header -->
+        <div class="explore-header reveal-from-bottom">
+          <h2 class="explore-title">Explore Our Tailored<br>Recruitment Services</h2>
+          <a href="html/service.html" class="btn-explore-view-all">View all services</a>
+        </div>
+
+        <!-- Image + Text Grid Container -->
+        <div class="explore-grid">
+          
+          <!-- Row 1: Resume Screening -->
+          <div class="explore-row">
+            <div class="explore-img-col reveal-from-left">
+              <img src="assets/home/explore_1.webp" alt="Resume Screening" class="explore-row-img">
+            </div>
+            <div class="explore-text-col reveal-from-right delay-1">
+              <h3 class="explore-row-title">Resume Screening</h3>
+              <p class="explore-row-desc">
+                A Recruitment Solution is a comprehensive service or tool designed to assist organizations in finding, attracting, and hiring the right candidates efficiently and effectively. These solutions can take various forms, including software platforms, to meet the specific hiring needs of a business.
+              </p>
+              <a href="html/service.html" class="btn-explore-read-more">Read more</a>
+            </div>
+          </div>
+
+          <!-- Row 2: Payroll Management -->
+          <div class="explore-row explore-row--reverse">
+            <div class="explore-text-col reveal-from-left delay-1">
+              <h3 class="explore-row-title">Payroll Management</h3>
+              <p class="explore-row-desc">
+                A Recruitment Solution is a comprehensive service or tool designed to assist organizations in finding, attracting, and hiring the right candidates efficiently and effectively. These solutions can take various forms, including software platforms, to meet the specific hiring needs of a business.
+              </p>
+              <a href="html/service.html" class="btn-explore-read-more">Read more</a>
+            </div>
+            <div class="explore-img-col reveal-from-right">
+              <img src="assets/home/explore_2.webp" alt="Payroll Management" class="explore-row-img">
+            </div>
+          </div>
+
+          <!-- Row 3: Consulting Services -->
+          <div class="explore-row">
+            <div class="explore-img-col reveal-from-left">
+              <img src="assets/home/explore_3.webp" alt="Consulting Services" class="explore-row-img">
+            </div>
+            <div class="explore-text-col reveal-from-right delay-1">
+              <h3 class="explore-row-title">Consulting Services</h3>
+              <p class="explore-row-desc">
+                A Recruitment Solution is a comprehensive service or tool designed to assist organizations in finding, attracting, and hiring the right candidates efficiently and effectively. These solutions can take various forms, including software platforms, to meet the specific hiring needs of a business.
+              </p>
+              <a href="html/service.html" class="btn-explore-read-more">Read more</a>
+            </div>
+          </div>
+
+        </div>
+    </section>
+
+    <!-- Platform Section -->
+    <section class="platform-section" id="platform-section">
+      <div class="platform-container">
+        
+        <!-- Left Side: Intro and CTA -->
+        <div class="platform-left-content reveal-from-left">
+          <h2 class="platform-title">Platform that matches with<br>top-tier talent.</h2>
+          <p class="platform-desc">
+            Our tailored approach integrates seamlessly with your existing systems, ensuring a smooth experience from start to finish.
+          </p>
+          <a href="html/about.html" class="btn-platform-read-more">Read more</a>
+        </div>
+
+        <!-- Right Side: White Card Content -->
+        <div class="platform-right-card reveal-from-right delay-1">
+          <div class="platform-card-inner">
+            <!-- Card Left: Text & Bullet Points -->
+            <div class="platform-card-text-col">
+              <h3 class="platform-card-title">We know every business has<br>unique hiring needs.</h3>
+              <p class="platform-card-desc">
+                We learn about your specific workforce demands and design a recruitment process that attracts the right candidates, enhancing the quality of your hires.
+              </p>
+              
+              <!-- Bullet Points -->
+              <ul class="platform-bullets">
+                <li class="platform-bullet-item">
+                  <img src="assets/home/tick_icon.webp" alt="Check Icon" class="platform-tick-icon">
+                  <span class="platform-bullet-text">Better Talent Fit</span>
+                </li>
+                <li class="platform-bullet-item">
+                  <img src="assets/home/tick_icon.webp" alt="Check Icon" class="platform-tick-icon">
+                  <span class="platform-bullet-text">Enhanced Hiring Quality</span>
+                </li>
+                <li class="platform-bullet-item">
+                  <img src="assets/home/tick_icon.webp" alt="Check Icon" class="platform-tick-icon">
+                  <span class="platform-bullet-text">Reduced Turnover</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Card Right: Image -->
+            <div class="platform-card-img-col">
+              <img src="assets/home/platform_img.webp" alt="Team meeting" class="platform-card-img">
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+    <!-- Innovation / Diverse Skills Section -->
+    <section class="innovation-section" id="innovation-section">
+      <div class="innovation-container">
+        
+        <!-- Text Container Header -->
+        <div class="innovation-header reveal-from-bottom">
+          <h2 class="innovation-title">Where Diverse Skills<br>Drive Innovation</h2>
+          <p class="innovation-desc">At AIQ, diverse backgrounds and expertise fuel innovation for the future of AI.</p>
+        </div>
+
+        <!-- Image Container Grid -->
+        <div class="innovation-grid">
+          
+          <!-- Column 1 -->
+          <div class="innovation-col col-1 reveal-from-left">
+            <!-- Card 1: Computer Vision -->
+            <a href="html/404.html" class="innovation-card height-sm" style="display: block; text-decoration: none;">
+              <img src="assets/home/where_1.webp" alt="Computer Vision" class="innovation-img">
+              <div class="innovation-card-overlay"></div>
+              <h4 class="innovation-card-text">Computer<br>Vision</h4>
+            </a>
+            <!-- Card 2: Software Development -->
+            <a href="html/404.html" class="innovation-card height-sm" style="display: block; text-decoration: none;">
+              <img src="assets/home/where_2.webp" alt="Software Development" class="innovation-img">
+              <div class="innovation-card-overlay"></div>
+              <h4 class="innovation-card-text">Software<br>Development</h4>
+            </a>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="innovation-col col-2 reveal-from-bottom">
+            <!-- Card 3: Cloud Computing -->
+            <a href="html/404.html" class="innovation-card height-lg" style="display: block; text-decoration: none;">
+              <img src="assets/home/where_3.webp" alt="Cloud Computing" class="innovation-img">
+              <div class="innovation-card-overlay"></div>
+              <h4 class="innovation-card-text">Cloud<br>Computing</h4>
+            </a>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="innovation-col col-3 reveal-from-bottom">
+            <!-- Row 1 inside Col 3 -->
+            <div class="innovation-subrow">
+              <!-- Card 4: Machine Learning -->
+              <a href="html/404.html" class="innovation-card height-sm width-half" style="display: block; text-decoration: none;">
+                <img src="assets/home/where_4.webp" alt="Machine Learning" class="innovation-img">
+                <div class="innovation-card-overlay"></div>
+                <h4 class="innovation-card-text">Machine<br>Learning</h4>
+              </a>
+              <!-- Card 5: Big Data Processing -->
+              <a href="html/404.html" class="innovation-card height-sm width-half" style="display: block; text-decoration: none;">
+                <img src="assets/home/where_5.webp" alt="Big Data Processing" class="innovation-img">
+                <div class="innovation-card-overlay"></div>
+                <h4 class="innovation-card-text">Big Data<br>Processing</h4>
+              </a>
+            </div>
+            <!-- Card 6: Data Visualization -->
+            <a href="html/404.html" class="innovation-card height-sm width-full" style="display: block; text-decoration: none;">
+              <img src="assets/home/where_6.webp" alt="Data Visualization" class="innovation-img">
+              <div class="innovation-card-overlay"></div>
+              <h4 class="innovation-card-text">Data<br>Visualization</h4>
+            </a>
+          </div>
+
+          <!-- Column 4 -->
+          <div class="innovation-col col-4 reveal-from-right">
+            <!-- Card 7: Optimization Techniques -->
+            <a href="html/404.html" class="innovation-card height-lg" style="display: block; text-decoration: none;">
+              <img src="assets/home/where_7.webp" alt="Optimization Techniques" class="innovation-img">
+              <div class="innovation-card-overlay"></div>
+              <h4 class="innovation-card-text">Optimization<br>Techniques</h4>
+            </a>
+          </div>
+
+        </div>
+    </section>
+
+    <!-- OUR HIRING PROCESS SECTION (Unique #1) -->
+    <section class="process-section" id="hiring-process">
+      <div class="process-bg-split"></div>
+      <div class="process-container">
+        <div class="process-header reveal-from-bottom">
+          <span class="process-label">How It Works</span>
+          <h2 class="process-title">Our Hiring Process</h2>
+          <p class="process-subtitle">A streamlined, transparent approach designed to connect you with the perfect talent — fast.</p>
+        </div>
+
+        <div class="process-timeline">
+          <!-- Step 1 -->
+          <div class="process-step reveal-from-bottom" style="transition-delay: 0s;">
+            <div class="step-number-ring">
+              <span class="step-number">01</span>
+            </div>
+            <div class="step-card">
+              <div class="step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+              <h3 class="step-name">Discovery</h3>
+              <p class="step-desc">We learn your business, culture, and the exact role requirements through a deep-dive consultation.</p>
+            </div>
+            <div class="step-connector"></div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="process-step reveal-from-bottom" style="transition-delay: 0.15s;">
+            <div class="step-number-ring">
+              <span class="step-number">02</span>
+            </div>
+            <div class="step-card">
+              <div class="step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              </div>
+              <h3 class="step-name">Sourcing</h3>
+              <p class="step-desc">Our AI-powered tools recruiters identify top-tier candidates from our global talent network.</p>
+            </div>
+            <div class="step-connector"></div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="process-step reveal-from-bottom" style="transition-delay: 0.3s;">
+            <div class="step-number-ring">
+              <span class="step-number">03</span>
+            </div>
+            <div class="step-card">
+              <div class="step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <h3 class="step-name">Screening</h3>
+              <p class="step-desc">Rigorous interviews, skill checks, and background checks ensure only the best reach your desk.</p>
+            </div>
+            <div class="step-connector"></div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="process-step reveal-from-bottom" style="transition-delay: 0.45s;">
+            <div class="step-number-ring">
+              <span class="step-number">04</span>
+            </div>
+            <div class="step-card">
+              <div class="step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              </div>
+              <h3 class="step-name">Placement</h3>
+              <p class="step-desc">We facilitate seamless onboarding and follow up to guarantee long-term success for both parties.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+      <div class="testimonial-container">
+        
+        <!-- Left Side: Title & Description & Controls -->
+        <div class="testimonial-left reveal-from-left">
+          <span class="testimonial-subtitle">Testimonials</span>
+          <h2 class="testimonial-title">See What Our<br>Clients Say</h2>
+          <p class="testimonial-desc">
+            Discover how our tailored recruitment process helps companies identify, attract, and onboard top-tier industry professionals.
+          </p>
+          <!-- Navigation Controls -->
+          <div class="testimonial-controls">
+            <button class="test-control-btn" id="prev-test" aria-label="Previous Testimonial">
+              <span class="control-arrow">&larr;</span>
+            </button>
+            <button class="test-control-btn" id="next-test" aria-label="Next Testimonial">
+              <span class="control-arrow">&rarr;</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Right Side: Rotating Card Stack -->
+        <div class="testimonial-right reveal-from-right delay-1">
+          <div class="testimonial-stack" id="testimonial-stack">
+            
+            <!-- Card 1 -->
+            <div class="testimonial-card active" data-index="0">
+              <div class="test-header">
+                <img src="assets/home/test_1.webp" alt="Merina Williams" class="test-avatar">
+                <div class="test-user-info">
+                  <h4 class="test-name">Merina Williams</h4>
+                  <span class="test-role">CEO at Taskbes</span>
+                </div>
+              </div>
+              <p class="test-text">
+                "This agency that our hiring process incredibly easy and stress-free. They took care of every step, so we didn't have to worry about anything. Their quality of candidates exceeded that valuable partner in recruitment!"
+              </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="testimonial-card next" data-index="1">
+              <div class="test-header">
+                <img src="assets/home/test_2.webp" alt="Martin Hells" class="test-avatar">
+                <div class="test-user-info">
+                  <h4 class="test-name">Martin Hells</h4>
+                  <span class="test-role">CEO at Markeotic</span>
+                </div>
+              </div>
+              <p class="test-text">
+                "This agency that our hiring process incredibly easy and stress-free. They took care of every step, so we didn't have to worry about anything. Their quality of candidates exceeded that valuable partner in recruitment!"
+              </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="testimonial-card incoming" data-index="2">
+              <div class="test-header">
+                <img src="assets/home/test_3.webp" alt="John Doe" class="test-avatar">
+                <div class="test-user-info">
+                  <h4 class="test-name">John Doe</h4>
+                  <span class="test-role">Director at TechCorp</span>
+                </div>
+              </div>
+              <p class="test-text">
+                "The agency provided exceptional the candidates quickly and efficiently. They took the time to understand our specific needs, which made all the difference. The entire process was smooth and well-organized."
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Leadership / Our Smart People Section -->
+    <section class="leadership-cta-section" id="leadership-cta-section">
+      <div class="leadership-cta-overlay"></div>
+      <div class="leadership-cta-container reveal-from-bottom">
+        <span class="leadership-cta-label">LEADERSHIP</span>
+        <h2 class="leadership-cta-title">Our Smart People</h2>
+        <p class="leadership-cta-desc">
+          Recruitment services, often provided by specialized agencies or firms, offer organizations assistance in identifying, attracting.
+        </p>
+        <a href="html/about.html" class="btn-leadership-cta">Our team</a>
+      </div>
+    </section>
+
+    <!-- INDUSTRIES WE EMPOWER SECTION (Unique #2) -->
+    <section class="industries-section" id="industries-section">
+      <div class="industries-container">
+        <div class="industries-header reveal-from-bottom">
+          <span class="industries-label">Expertise Across Sectors</span>
+          <h2 class="industries-title">Industries We<br>Empower</h2>
+        </div>
+
+        <!-- Marquee Row 1 (Left to Right) -->
+        <div class="marquee-track" aria-hidden="true">
+          <div class="marquee-scroll marquee-ltr">
+            <span class="industry-pill">Technology & IT</span>
+            <span class="industry-pill pill-outlined">Healthcare</span>
+            <span class="industry-pill">Finance & Banking</span>
+            <span class="industry-pill pill-outlined">Manufacturing</span>
+            <span class="industry-pill">Energy & Utilities</span>
+            <span class="industry-pill pill-outlined">Retail & E-commerce</span>
+            <span class="industry-pill">Legal Services</span>
+            <span class="industry-pill pill-outlined">Education</span>
+            <!-- Duplicated for seamless loop -->
+            <span class="industry-pill">Technology & IT</span>
+            <span class="industry-pill pill-outlined">Healthcare</span>
+            <span class="industry-pill">Finance & Banking</span>
+            <span class="industry-pill pill-outlined">Manufacturing</span>
+            <span class="industry-pill">Energy & Utilities</span>
+            <span class="industry-pill pill-outlined">Retail & E-commerce</span>
+            <span class="industry-pill">Legal Services</span>
+            <span class="industry-pill pill-outlined">Education</span>
+          </div>
+        </div>
+
+        <!-- Marquee Row 2 (Right to Left) -->
+        <div class="marquee-track" aria-hidden="true">
+          <div class="marquee-scroll marquee-rtl">
+            <span class="industry-pill pill-outlined">Telecommunications</span>
+            <span class="industry-pill">Real Estate</span>
+            <span class="industry-pill pill-outlined">Logistics & Supply Chain</span>
+            <span class="industry-pill">Media & Entertainment</span>
+            <span class="industry-pill pill-outlined">Pharmaceuticals</span>
+            <span class="industry-pill">Government & Public Sector</span>
+            <span class="industry-pill pill-outlined">Hospitality & Tourism</span>
+            <span class="industry-pill">Automotive</span>
+            <!-- Duplicated for seamless loop -->
+            <span class="industry-pill pill-outlined">Telecommunications</span>
+            <span class="industry-pill">Real Estate</span>
+            <span class="industry-pill pill-outlined">Logistics & Supply Chain</span>
+            <span class="industry-pill">Media & Entertainment</span>
+            <span class="industry-pill pill-outlined">Pharmaceuticals</span>
+            <span class="industry-pill">Government & Public Sector</span>
+            <span class="industry-pill pill-outlined">Hospitality & Tourism</span>
+            <span class="industry-pill">Automotive</span>
+          </div>
+        </div>
+
+        <!-- Marquee Row 3 (Left to Right, slower) -->
+        <div class="marquee-track" aria-hidden="true">
+          <div class="marquee-scroll marquee-ltr-slow">
+            <span class="industry-pill">Aerospace & Defense</span>
+            <span class="industry-pill pill-outlined">Agriculture</span>
+            <span class="industry-pill">Consulting</span>
+            <span class="industry-pill pill-outlined">Non-Profit & NGO</span>
+            <span class="industry-pill">Construction</span>
+            <span class="industry-pill pill-outlined">Insurance</span>
+            <span class="industry-pill">Cybersecurity</span>
+            <span class="industry-pill pill-outlined">Biotech</span>
+            <!-- Duplicated for seamless loop -->
+            <span class="industry-pill">Aerospace & Defense</span>
+            <span class="industry-pill pill-outlined">Agriculture</span>
+            <span class="industry-pill">Consulting</span>
+            <span class="industry-pill pill-outlined">Non-Profit & NGO</span>
+            <span class="industry-pill">Construction</span>
+            <span class="industry-pill pill-outlined">Insurance</span>
+            <span class="industry-pill">Cybersecurity</span>
+            <span class="industry-pill pill-outlined">Biotech</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Reusable Common Footer -->
+  <div id="common-footer">
+    <footer class="site-footer" id="site-footer">
+      <div class="footer-container">
+        
+        <!-- Top Footer Main Grid -->
+        <div class="footer-top-grid">
+          
+          <!-- Column 1: Brand Logo, Desc & Social Icons -->
+          <div class="footer-col footer-col-brand">
+            <a href="index.html" class="footer-logo-link" id="footer-logo-link">
+              <img src="assets/logo.webp" alt="Stackly Logo" class="footer-logo" id="footer-logo-img">
+            </a>
+            <p class="footer-brand-desc">
+              Empowering companies and extraordinary talent with modern HR recruitment & executive search solutions.
+            </p>
+            
+            <!-- Popular Social Icons: LinkedIn, X, Instagram, YouTube -->
+            <div class="footer-social-links" aria-label="Social Media Links">
+              <!-- LinkedIn -->
+              <a href="html/404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.77a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+                </svg>
+              </a>
+              <!-- X / Twitter -->
+              <a href="html/404.html" class="social-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <!-- Instagram -->
+              <a href="html/404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <!-- YouTube -->
+              <a href="html/404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Column 2: Quick Links (Order matches Header Nav: Home, About, Service, Blog, Contact) -->
+          <div class="footer-col">
+            <h3 class="footer-col-title">Quick Links</h3>
+            <ul class="footer-nav-list">
+              <li><a href="index.html" class="footer-link" id="footer-nav-home">Home</a></li>
+              <li><a href="html/about.html" class="footer-link" id="footer-nav-about">About</a></li>
+              <li><a href="html/service.html" class="footer-link" id="footer-nav-service">Service</a></li>
+              <li><a href="html/blog.html" class="footer-link" id="footer-nav-blog">Blog</a></li>
+              <li><a href="html/contact.html" class="footer-link" id="footer-nav-contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Solutions -->
+          <div class="footer-col">
+            <h3 class="footer-col-title">Solutions</h3>
+            <ul class="footer-nav-list">
+              <li><a href="html/404.html" class="footer-link">Executive Search</a></li>
+              <li><a href="html/404.html" class="footer-link">Contract Staffing</a></li>
+              <li><a href="html/404.html" class="footer-link">Direct Hire</a></li>
+              <li><a href="html/404.html" class="footer-link">RPO Advisory</a></li>
+              <li><a href="html/404.html" class="footer-link">Tech Sourcing</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Stay Updated (Mandatory Email Field) -->
+          <div class="footer-col footer-col-subscribe">
+            <h3 class="footer-col-title">Stay Updated</h3>
+            <p class="footer-subscribe-desc">
+              Get weekly tech talent insights & market salary reports.
+            </p>
+            
+            <form class="footer-subscribe-form" id="footer-subscribe-form" novalidate>
+              <div class="input-wrapper">
+                <input 
+                  type="email" 
+                  id="footer-email-input" 
+                  class="footer-email-input" 
+                  placeholder="Enter your email" 
+                  required 
+                  aria-label="Enter your email address"
+                >
+                <button type="submit" class="btn btn-subscribe">Subscribe</button>
+              </div>
+              <div class="form-feedback-msg" id="footer-form-msg" aria-live="polite"></div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Bottom Legal Row -->
+        <div class="footer-bottom-row">
+          <div class="footer-legal-links">
+            <a href="html/404.html" class="footer-legal-link">Privacy Policy</a>
+            <a href="html/404.html" class="footer-legal-link">Terms of Service</a>
+            <a href="html/404.html" class="footer-legal-link">Security</a>
+          </div>
+          <div class="footer-copyright">
+            &copy; 2026 Stackly Recruitment Agency. All rights reserved.
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/common.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

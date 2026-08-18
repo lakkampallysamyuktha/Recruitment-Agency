@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard – Stackly</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+
+    <style>
+        /* ==========================================
+           GLOBAL CSS (subset from global.css)
+           ========================================== */
+        :root {
+            --color-white: #FFFFFF;
+            --color-burgundy: #8B0F3A;
+            --color-charcoal: #151722;
+            --color-burgundy-hover: #720b2f;
+            --color-charcoal-hover: #212433;
+            --color-charcoal-muted: #2d3043;
+            --color-text-dark: #151722;
+            --color-text-muted: #5c6075;
+            --color-text-light: #ffffff;
+            --font-open-sans: 'Open Sans', sans-serif;
+            --font-serif-heading: 'Playfair Display', serif;
+            --font-primary: 'Inter', sans-serif;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(21, 23, 34, 0.06);
+            --shadow-md: 0 8px 24px rgba(21, 23, 34, 0.08);
+            --shadow-lg: 0 16px 48px rgba(21, 23, 34, 0.10);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: #f4f6fa;
+            color: var(--color-text-dark);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================
+           SCROLLBAR
+           ========================================== */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-burgundy);
+            border-radius: 10px;
+        }
+
+        /* ==========================================
+           SIDEBAR — ADMIN WHITE THEME
+           ========================================== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 260px;
+            background: var(--color-white);
+            border-right: 1px solid rgba(21, 23, 34, 0.06);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 24px 22px 16px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .sidebar-logo-link img {
+            height: 36px;
+            width: auto;
+        }
+
+        .sidebar-logo-link span {
+            font-family: var(--font-serif-heading);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            letter-spacing: -0.3px;
+        }
+
+        /* Role Chip */
+        .role-chip {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: rgba(139, 15, 58, 0.10);
+            color: var(--color-burgundy);
+            border: 1px solid rgba(139, 15, 58, 0.15);
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 18px 12px;
+        }
+
+        /* Custom scrollbar styling for WebKit (Chrome, Safari, Edge) */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(139, 15, 58, 0.22);
+            border-radius: 10px;
+            transition: background var(--transition-fast);
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 15, 58, 0.5);
+        }
+
+        .sidebar-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-bottom: 32px;
+        }
+
+        .sidebar-nav li {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            border-radius: var(--radius-sm);
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sidebar-nav li:hover {
+            background: rgba(139, 15, 58, 0.06);
+            color: var(--color-charcoal);
+        }
+
+        .sidebar-nav li.active {
+            background: rgba(139, 15, 58, 0.10);
+            color: var(--color-burgundy);
+            font-weight: 600;
+        }
+
+        .sidebar-nav li.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 28px;
+            background: var(--color-burgundy);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .sidebar-nav li svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sidebar-nav li.active svg {
+            stroke: var(--color-burgundy);
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 16px 22px 24px;
+            border-top: 1px solid rgba(21, 23, 34, 0.06);
+            flex-shrink: 0;
+        }
+
+        .sidebar-email {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-email svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            stroke: var(--color-text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            width: 100%;
+            background: rgba(21, 23, 34, 0.04);
+        }
+
+        .btn-logout:hover {
+            background: rgba(139, 15, 58, 0.10);
+            color: var(--color-burgundy);
+        }
+
+        .btn-logout svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ==========================================
+           MAIN CONTENT
+           ========================================== */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 28px 36px 40px;
+            background: #f4f6fa;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .topbar-left h1 {
+            font-family: var(--font-serif-heading);
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+        }
+
+        .topbar-left p {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-date {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            background: var(--color-white);
+            padding: 8px 18px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: 6px;
+            background: var(--color-white);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: var(--color-charcoal);
+            border-radius: 4px;
+            transition: var(--transition-normal);
+        }
+
+        /* ==========================================
+           CONTENT SECTIONS
+           ========================================== */
+        .page-content {
+            display: block;
+            animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-content.hidden {
+            display: none;
+        }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            margin-bottom: 32px;
+        }
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-family: var(--font-serif-heading);
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+            margin: 16px;
+        }
+
+        /* ==========================================
+           ADMIN CARDS
+           ========================================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: var(--color-white);
+            padding: 20px 22px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            border-bottom: 3px solid var(--color-burgundy);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .label {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .stat-card .value {
+            font-family: var(--font-serif-heading);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-top: 4px;
+        }
+
+        .stat-card .change {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .stat-card .change.up {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+        .stat-card .change.down {
+            background: rgba(239, 68, 68, 0.10);
+            color: #dc2626;
+        }
+        .stat-card .change.neutral {
+            background: rgba(139, 15, 58, 0.08);
+            color: var(--color-burgundy);
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-box {
+            background: var(--color-white);
+            padding: 20px 20px 12px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-box h4 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .chart-box canvas {
+            width: 100% !important;
+            max-height: 220px;
+        }
+        .chart-box.full {
+            grid-column: 1 / -1;
+        }
+
+        .activity-list {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 8px 0;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 22px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+            font-size: 14px;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .activity-item .dot.burgundy {
+            background: var(--color-burgundy);
+        }
+        .activity-item .dot.green {
+            background: #16a34a;
+        }
+        .activity-item .dot.orange {
+            background: #f59e0b;
+        }
+        .activity-item .dot.blue {
+            background: #3b82f6;
+        }
+        .activity-item .dot.purple {
+            background: #7c3aed;
+        }
+        .activity-item .dot.pink {
+            background: #db2777;
+        }
+        .activity-item .dot.teal {
+            background: #0d9488;
+        }
+
+        .activity-item .time {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .job-card {
+            background: var(--color-white);
+            padding: 18px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border-left: 3px solid var(--color-burgundy);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .job-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+        .job-card p {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+        .job-card .badge {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 14px;
+            border-radius: 20px;
+            background: rgba(139, 15, 58, 0.08);
+            color: var(--color-burgundy);
+        }
+        .job-card .badge.closed {
+            background: rgba(21, 23, 34, 0.06);
+            color: var(--color-text-muted);
+        }
+
+        .candidate-table-wrap {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+            padding: 4px 0;
+        }
+        .candidate-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .candidate-table th {
+            text-align: left;
+            padding: 14px 20px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+        }
+        .candidate-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+            color: var(--color-charcoal);
+        }
+        .candidate-table tr:last-child td {
+            border-bottom: none;
+        }
+        .candidate-table .status-badge {
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .candidate-table .status-badge.active {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+        .candidate-table .status-badge.pending {
+            background: rgba(245, 158, 11, 0.12);
+            color: #d97706;
+        }
+        .candidate-table .status-badge.closed {
+            background: rgba(21, 23, 34, 0.06);
+            color: var(--color-text-muted);
+        }
+        .candidate-table .status-badge.review {
+            background: rgba(59, 130, 246, 0.12);
+            color: #2563eb;
+        }
+        .candidate-table .status-badge.offer {
+            background: rgba(13, 148, 136, 0.12);
+            color: #0d9488;
+        }
+
+        .settings-group {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+        .settings-group:last-child {
+            margin-bottom: 0;
+        }
+        .settings-group h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-bottom: 6px;
+        }
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+        }
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+        .settings-row .label {
+            font-size: 14px;
+            color: var(--color-charcoal);
+        }
+        .settings-row .desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        .toggle {
+            width: 44px;
+            height: 24px;
+            border-radius: 30px;
+            background: #d1d5db;
+            transition: var(--transition-normal);
+            position: relative;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .toggle.active {
+            background: var(--color-burgundy);
+        }
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-white);
+            transition: var(--transition-normal);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        .toggle.active::after {
+            left: 22px;
+        }
+
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .quick-chip {
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--color-white);
+            border: 1px solid rgba(21, 23, 34, 0.08);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .quick-chip:hover {
+            background: var(--color-burgundy);
+            color: var(--color-white);
+            border-color: var(--color-burgundy);
+            transform: translateY(-2px);
+        }
+
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+        }
+        .dept-card {
+            background: var(--color-white);
+            padding: 16px 18px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border-top: 3px solid var(--color-burgundy);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .dept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .dept-card .dept-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+        .dept-card .dept-value {
+            font-family: var(--font-serif-heading);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--color-burgundy);
+            margin-top: 4px;
+        }
+        .dept-card .dept-change {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+        }
+        .dept-card .dept-change.up {
+            color: #16a34a;
+        }
+        .dept-card .dept-change.down {
+            color: #dc2626;
+        }
+
+        .connected-account {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+        }
+        .connected-account:last-child {
+            border-bottom: none;
+        }
+        .connected-account .acct-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(139, 15, 58, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-burgundy);
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .connected-account .acct-info {
+            flex: 1;
+        }
+        .connected-account .acct-info .acct-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+        }
+        .connected-account .acct-info .acct-desc {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+        .connected-account .acct-status {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+        .connected-account .acct-status.connected {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+        .connected-account .acct-status.disconnected {
+            background: rgba(21, 23, 34, 0.06);
+            color: var(--color-text-muted);
+        }
+
+        /* Admin unique: metric bars */
+        .metric-bar-wrap {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 20px 24px;
+        }
+        .metric-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(21, 23, 34, 0.04);
+        }
+        .metric-bar-item:last-child {
+            border-bottom: none;
+        }
+        .metric-bar-item .mb-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-charcoal);
+            min-width: 100px;
+        }
+        .metric-bar-item .mb-track {
+            flex: 1;
+            height: 6px;
+            border-radius: 6px;
+            background: rgba(21, 23, 34, 0.08);
+            overflow: hidden;
+        }
+        .metric-bar-item .mb-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: var(--color-burgundy);
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 0%;
+        }
+        .metric-bar-item .mb-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            min-width: 48px;
+            text-align: right;
+        }
+
+        /* Admin KPI cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+        .kpi-card {
+            background: var(--color-white);
+            padding: 18px 22px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .kpi-card .kpi-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(139, 15, 58, 0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-burgundy);
+            flex-shrink: 0;
+        }
+        .kpi-card .kpi-info .kpi-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .kpi-card .kpi-info .kpi-value {
+            font-family: var(--font-serif-heading);
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        /* Company cards */
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .company-card {
+            background: var(--color-white);
+            padding: 18px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border-top: 3px solid var(--color-burgundy);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .company-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .company-card .company-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+        .company-card .company-detail {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+        .company-card .company-badge {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 12px;
+            border-radius: 20px;
+            background: rgba(34, 197, 94, 0.10);
+            color: #16a34a;
+        }
+
+        /* Sidebar close button styling */
+        .sidebar-close-btn {
+            display: none;
+        }
+
+        .desktop-header-info {
+            display: block;
+        }
+
+        .mobile-header-info {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-box.full {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .sidebar-close-btn {
+                display: block;
+                position: absolute;
+                top: 24px;
+                right: 24px;
+                font-size: 32px;
+                font-weight: 300;
+                line-height: 1;
+                color: var(--color-charcoal);
+                cursor: pointer;
+                border: none;
+                background: transparent;
+                z-index: 1001;
+            }
+
+            .sidebar-header {
+                position: relative;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 100%; /* Full width mobile drawer */
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 84px 18px 32px; /* Add padding for fixed topbar */
+            }
+
+            .topbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 64px;
+                background: var(--color-white);
+                border-bottom: 1px solid rgba(21, 23, 34, 0.06);
+                box-shadow: var(--shadow-sm);
+                padding: 0 20px;
+                display: flex;
+                flex-direction: row !important; /* Force side-by-side on mobile */
+                align-items: center;
+                justify-content: space-between;
+                z-index: 990;
+            }
+
+            .desktop-header-info {
+                display: none;
+            }
+
+            .mobile-header-info {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .mobile-topbar-logo {
+                height: 28px;
+                width: auto;
+            }
+
+            .mobile-topbar-greeting {
+                font-size: 14.5px;
+                font-weight: 600;
+                color: var(--color-charcoal);
+            }
+
+            .topbar-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .topbar-date {
+                display: none; /* Hide date on mobile to keep space clean */
+            }
+
+            .hamburger {
+                display: flex;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dept-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .company-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+            .dept-grid {
+                grid-template-columns: 1fr;
+            }
+            .company-grid {
+                grid-template-columns: 1fr;
+            }
+            .topbar {
+                padding: 0 16px;
+            }
+            .topbar-date {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+            .candidate-table th,
+            .candidate-table td {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+            .settings-group {
+                padding: 16px 18px;
+            }
+            .quick-chips {
+                gap: 8px;
+            }
+            .quick-chip {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+            .metric-bar-item {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .metric-bar-item .mb-label {
+                min-width: 80px;
+                font-size: 13px;
+            }
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(21, 23, 34, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+        }
+        .sidebar-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+    SIDEBAR OVERLAY (mobile)
+    ========================================== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==========================================
+    SIDEBAR — ADMIN DARK THEME
+    ========================================== -->
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Header: Logo + Role Chip -->
+        <div class="sidebar-header">
+            <a href="../index.html" class="sidebar-logo-link">
+                <img src="../assets/logo.webp" alt="Stackly" />
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">&times;</button>
+            <div class="role-chip">ADMIN</div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            <ul id="navList">
+                <li class="active" data-page="dashboard">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    Platform Stats
+                </li>
+                <li data-page="users">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    User Management
+                </li>
+                <li data-page="listings">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    Employer Listings
+                </li>
+                <li data-page="subscriptions">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
+                    Revenue & Subs
+                </li>
+                <li data-page="logs">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Audit Logs
+                </li>
+                <li data-page="system">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    System Config
+                </li>
+                <li data-page="tickets">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Support Tickets
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Footer: Email + Logout -->
+        <div class="sidebar-footer">
+            <div class="sidebar-email">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span id="userEmail">admin@stackly.com</span>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- ==========================================
+    MAIN CONTENT (Scrollable)
+    ========================================== -->
+    <main class="main-content" id="mainContent">
+
+        <div class="topbar">
+            <div class="topbar-left">
+                <!-- Desktop View Header Info -->
+                <div class="desktop-header-info">
+                    <h1 id="pageTitle">Platform Overview</h1>
+                    <p id="pageSub">Welcome back, <span id="userName">Admin</span> — manage your recruitment ecosystem</p>
+                </div>
+                <!-- Mobile View Header Info -->
+                <div class="mobile-header-info">
+                    <img src="../assets/logo.webp" alt="Stackly Logo" class="mobile-topbar-logo" />
+                    <span class="mobile-topbar-greeting">Hi, <span class="mobile-username-placeholder">Admin</span></span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <span class="topbar-date" id="todayDate"></span>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle sidebar">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==========================================
+        PAGE 1: PLATFORM STATS
+        ========================================== -->
+        <div class="page-content" id="page-dashboard">
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Total Users</div>
+                        <div class="value">3,142</div>
+                        <span class="change up">↑ 14% this month</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Active Jobs</div>
+                        <div class="value">58</div>
+                        <span class="change up">↑ 12% this month</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Conversion Rate</div>
+                        <div class="value">24.8%</div>
+                        <span class="change up">↑ 3.5% this week</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Monthly Revenue</div>
+                        <div class="value">$54.2K</div>
+                        <span class="change up">↑ 18% this month</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">User Signups & Performance</h3>
+                <div class="chart-grid">
+                    <div class="chart-box full">
+                        <h4>Monthly Candidate vs Employer Registrations</h4>
+                        <canvas id="adminLineChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Platform Health Indicators</h3>
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                    <div class="stat-card" style="border-left: 3px solid #16a34a;">
+                        <div class="label">API Response Time</div>
+                        <div class="value">98 ms</div>
+                        <span class="change up" style="background: rgba(34,197,94,0.1); color: #16a34a;">Excellent</span>
+                    </div>
+                    <div class="stat-card" style="border-left: 3px solid #f59e0b;">
+                        <div class="label">Database Load</div>
+                        <div class="value">12.4%</div>
+                        <span class="change up" style="background: rgba(245,158,11,0.1); color: #d97706;">Normal</span>
+                    </div>
+                    <div class="stat-card" style="border-left: 3px solid var(--color-burgundy);">
+                        <div class="label">CPU Core Usage</div>
+                        <div class="value">8.2%</div>
+                        <span class="change up" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy);">Optimized</span>
+                    </div>
+                </div>
+            <!-- Section 4: Security Alerts & Live Firewall -->
+            <section class="content-section">
+                <h3 class="section-title">Security & Intrusion Prevention</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Source IP</th>
+                                <th>Location</th>
+                                <th>Access Point</th>
+                                <th>Risk Score</th>
+                                <th>Security Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>198.51.100.42</strong></td>
+                                <td>Frankfurt, DE</td>
+                                <td>/api/v1/auth/login</td>
+                                <td><span class="status-badge closed" style="background: rgba(239,68,68,0.1); color: #dc2626;">High Risk</span></td>
+                                <td><span class="status-badge closed">IP Blocked</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>203.0.113.88</strong></td>
+                                <td>San Francisco, US</td>
+                                <td>/admin/settings</td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">Safe</span></td>
+                                <td><span class="status-badge active">Allowed (Admin)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>45.223.12.102</strong></td>
+                                <td>Beijing, CN</td>
+                                <td>/api/v1/candidates/search</td>
+                                <td><span class="status-badge pending" style="background: rgba(245,158,11,0.1); color: #d97706;">Moderate</span></td>
+                                <td><span class="status-badge pending">Rate Limited</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 5: System Task Queue -->
+            <section class="content-section">
+                <h3 class="section-title">Active System Task Queue</h3>
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                    <div class="stat-card" style="align-items: flex-start; text-align: left; padding: 24px;">
+                        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-weight: 600; color: var(--color-charcoal);">Weekly Newsletter Broadcast</span>
+                            <span class="status-badge pending">Processing</span>
+                        </div>
+                        <div style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 8px;">Targeting: 3,142 recipients</div>
+                        <div style="width: 100%; height: 6px; background: rgba(21, 23, 34, 0.06); border-radius: 4px; overflow: hidden;">
+                            <div style="width: 68%; height: 100%; background: var(--color-burgundy); border-radius: 4px;"></div>
+                        </div>
+                        <div style="width: 100%; display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); margin-top: 6px;">
+                            <span>68% Complete</span>
+                            <span>ETA: 4 mins</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="align-items: flex-start; text-align: left; padding: 24px;">
+                        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-weight: 600; color: var(--color-charcoal);">Database Index Rebuild</span>
+                            <span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">Completed</span>
+                        </div>
+                        <div style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 8px;">Optimizing query indices</div>
+                        <div style="width: 100%; height: 6px; background: rgba(21, 23, 34, 0.06); border-radius: 4px; overflow: hidden;">
+                            <div style="width: 100%; height: 100%; background: #16a34a; border-radius: 4px;"></div>
+                        </div>
+                        <div style="width: 100%; display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); margin-top: 6px;">
+                            <span>100% Complete</span>
+                            <span>Finished: 12m ago</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+        PAGE 2: USER MANAGEMENT
+        ========================================== -->
+        <div class="page-content hidden" id="page-users">
+            <section class="content-section">
+                <h3 class="section-title">Ecosystem User Directory</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Alice Vance</strong></td>
+                                <td>alice@techcorp.io</td>
+                                <td><span class="status-badge offer">Employer</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>Jan 15, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bob Sterling</strong></td>
+                                <td>bob@globalrecruiting.com</td>
+                                <td><span class="status-badge pending">Recruiter</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>Feb 20, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Carol Miller</strong></td>
+                                <td>carol.m@stackly.com</td>
+                                <td><span class="status-badge review">Moderator</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>Mar 02, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>David Zhang</strong></td>
+                                <td>d.zhang@apexsystems.net</td>
+                                <td><span class="status-badge offer">Employer</span></td>
+                                <td><span class="status-badge closed">Suspended</span></td>
+                                <td>Apr 11, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Elena Rostova</strong></td>
+                                <td>elena@stackly.com</td>
+                                <td><span class="status-badge active">Super Admin</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>May 01, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frank Kowalski</strong></td>
+                                <td>frank@innovate.co</td>
+                                <td><span class="status-badge offer">Employer</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>Jun 12, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Grace Hopper</strong></td>
+                                <td>g.hopper@fintech.com</td>
+                                <td><span class="status-badge offer">Employer</span></td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>Jul 19, 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Henry Ford</strong></td>
+                                <td>henry@staffingexperts.com</td>
+                                <td><span class="status-badge pending">Recruiter</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>Aug 05, 2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <!-- Section 2: Role Allocation Breakdown -->
+            <section class="content-section">
+                <h3 class="section-title">Ecosystem Role Allocations</h3>
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid var(--color-burgundy);">
+                        <div class="label" style="font-size: 12px;">Administrators</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">6</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Internal staff</span>
+                    </div>
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid #3b82f6;">
+                        <div class="label" style="font-size: 12px;">Recruiter Partners</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">38</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Verified agencies</span>
+                    </div>
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid #0d9488;">
+                        <div class="label" style="font-size: 12px;">Registered Employers</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">244</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Company profiles</span>
+                    </div>
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid #16a34a;">
+                        <div class="label" style="font-size: 12px;">Active Candidates</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">2,854</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Job seekers</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Suspensions & Moderation Holds -->
+            <section class="content-section">
+                <h3 class="section-title">Suspensions & Moderation Holds</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Reason Code</th>
+                                <th>Severity</th>
+                                <th>Trigger Date</th>
+                                <th>Administrative Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>David Zhang</strong></td>
+                                <td>Spam Application Behavior</td>
+                                <td><span class="status-badge closed" style="background: rgba(239,68,68,0.1); color: #dc2626;">High</span></td>
+                                <td>Apr 11, 2026</td>
+                                <td>
+                                    <button class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; font-size: 11px;">Reinstate</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>John Doe</strong></td>
+                                <td>Multiple Account Signups</td>
+                                <td><span class="status-badge pending" style="background: rgba(245,158,11,0.1); color: #d97706;">Moderate</span></td>
+                                <td>May 14, 2026</td>
+                                <td>
+                                    <button class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; font-size: 11px;">Reinstate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+        PAGE 3: EMPLOYER LISTINGS
+        ========================================== -->
+        <div class="page-content hidden" id="page-listings">
+            <section class="content-section">
+                <h3 class="section-title">All Employer Postings Approval Pipeline</h3>
+                <div class="job-grid">
+                    <div class="job-card" style="border-left-color: #16a34a;">
+                        <h4>Chief Technology Officer (CTO)</h4>
+                        <p>FinTech Solutions · Full-time · $180k - $220k</p>
+                        <span class="badge" style="background: rgba(34,197,94,0.1); color: #16a34a;">Approved</span>
+                    </div>
+                    <div class="job-card" style="border-left-color: #16a34a;">
+                        <h4>Lead Cloud Architect</h4>
+                        <p>Apex Systems · Remote · $160k - $190k</p>
+                        <span class="badge" style="background: rgba(34,197,94,0.1); color: #16a34a;">Approved</span>
+                    </div>
+                    <div class="job-card" style="border-left-color: #f59e0b;">
+                        <h4>VP of Product Marketing</h4>
+                        <p>Innovate Inc · Hybrid · $140k - $170k</p>
+                        <span class="badge" style="background: rgba(245,158,11,0.1); color: #d97706;">Pending Review</span>
+                    </div>
+                    <div class="job-card" style="border-left-color: #16a34a;">
+                        <h4>Director of Talent Acquisition</h4>
+                        <p>Global Recruiting · Full-time · $110k - $130k</p>
+                        <span class="badge" style="background: rgba(34,197,94,0.1); color: #16a34a;">Approved</span>
+                    </div>
+                    <div class="job-card" style="border-left-color: #dc2626;">
+                        <h4>Principal AI Researcher</h4>
+                        <p>DeepMind Labs · Full-time · $210k - $250k</p>
+                        <span class="badge" style="background: rgba(239,68,68,0.1); color: #dc2626;">Rejected</span>
+                    </div>
+                    <div class="job-card" style="border-left-color: #16a34a;">
+                        <h4>Site Reliability Engineer (SRE)</h4>
+                        <p>CloudNexus · Remote · $130k - $150k</p>
+                        <span class="badge" style="background: rgba(34,197,94,0.1); color: #16a34a;">Approved</span>
+                    </div>
+                </div>
+            <!-- Section 2: Listing Activity Metrics -->
+            <section class="content-section">
+                <h3 class="section-title">Listing Activity Performance</h3>
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid var(--color-burgundy);">
+                        <div class="label" style="font-size: 12px;">Total Postings</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">342</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Historical postings</span>
+                    </div>
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid #3b82f6;">
+                        <div class="label" style="font-size: 12px;">Active Listings</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">126</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Currently visible</span>
+                    </div>
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid #f59e0b;">
+                        <div class="label" style="font-size: 12px;">Pending Approvals</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">14</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Awaiting moderator review</span>
+                    </div>
+                    <div class="stat-card" style="padding: 20px; border-top: 3px solid #dc2626;">
+                        <div class="label" style="font-size: 12px;">Flagged Job listings</div>
+                        <div class="value" style="font-size: 28px; margin: 4px 0;">3</div>
+                        <span style="font-size: 11px; color: var(--color-text-muted);">Awaiting abuse check</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Pending Approvals Queue Table -->
+            <section class="content-section">
+                <h3 class="section-title">Moderator Queue — Pending Approvals</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Submission Date</th>
+                                <th>Matching Score</th>
+                                <th>Administrative Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Senior AI Architect</strong></td>
+                                <td>OpenAI Inc.</td>
+                                <td>2 hours ago</td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">96%</span></td>
+                                <td>
+                                    <button class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; font-size: 11px; margin-right: 4px;">Approve</button>
+                                    <button class="status-badge closed" style="background: rgba(239,68,68,0.1); color: #dc2626; border: none; cursor: pointer; font-size: 11px;">Reject</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data Science Intern</strong></td>
+                                <td>Google LLC</td>
+                                <td>5 hours ago</td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">88%</span></td>
+                                <td>
+                                    <button class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; font-size: 11px; margin-right: 4px;">Approve</button>
+                                    <button class="status-badge closed" style="background: rgba(239,68,68,0.1); color: #dc2626; border: none; cursor: pointer; font-size: 11px;">Reject</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Product Designer</strong></td>
+                                <td>Meta Platforms</td>
+                                <td>1 day ago</td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">91%</span></td>
+                                <td>
+                                    <button class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; font-size: 11px; margin-right: 4px;">Approve</button>
+                                    <button class="status-badge closed" style="background: rgba(239,68,68,0.1); color: #dc2626; border: none; cursor: pointer; font-size: 11px;">Reject</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+        PAGE 4: REVENUE & SUBS
+        ========================================== -->
+        <div class="page-content hidden" id="page-subscriptions">
+            <section class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Premium Employers</div>
+                        <div class="value">92</div>
+                        <span class="change up">↑ 8% MTD</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Avg. Subscription Price</div>
+                        <div class="value">$142 / mo</div>
+                        <span class="change up">↑ 3% since Q2</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Annual Contract Value</div>
+                        <div class="value">$65.8K</div>
+                        <span class="change up">↑ 14% YoY</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Active Subscriptions</div>
+                        <div class="value">124</div>
+                        <span class="change up">↑ 22% MTD</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h3 class="section-title">Subscription Analytics</h3>
+                <div class="chart-grid">
+                    <div class="chart-box">
+                        <h4>Plan Tier Breakdown</h4>
+                        <canvas id="subsDoughnutChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Monthly Revenue Generation</h4>
+                        <canvas id="subsBarChart"></canvas>
+                    </div>
+                </div>
+            <!-- Section 3: Billing Plans Manager -->
+            <section class="content-section">
+                <h3 class="section-title">Billing Subscription Tiers</h3>
+                <div class="job-grid">
+                    <div class="job-card" style="border-left-color: var(--color-text-muted);">
+                        <h4>Standard Plan</h4>
+                        <p style="font-size: 20px; font-weight: 600; color: var(--color-charcoal); margin: 6px 0;">$49 <span style="font-size: 12px; font-weight: 400; color: var(--color-text-muted);">/ month</span></p>
+                        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 12px;">Up to 3 active listings · Basic candidate matching</p>
+                        <button class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy); border: none; cursor: pointer; font-size: 11px;">Configure Features</button>
+                    </div>
+                    <div class="job-card" style="border-left-color: var(--color-burgundy);">
+                        <h4>Professional Plan</h4>
+                        <p style="font-size: 20px; font-weight: 600; color: var(--color-charcoal); margin: 6px 0;">$149 <span style="font-size: 12px; font-weight: 400; color: var(--color-text-muted);">/ month</span></p>
+                        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 12px;">Up to 15 listings · Advanced matching engine · Analytics</p>
+                        <button class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy); border: none; cursor: pointer; font-size: 11px;">Configure Features</button>
+                    </div>
+                    <div class="job-card" style="border-left-color: #3b82f6;">
+                        <h4>Corporate Enterprise</h4>
+                        <p style="font-size: 20px; font-weight: 600; color: var(--color-charcoal); margin: 6px 0;">$499 <span style="font-size: 12px; font-weight: 400; color: var(--color-text-muted);">/ month</span></p>
+                        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 12px;">Unlimited listings · Dedicated support · Full ATS API</p>
+                        <button class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy); border: none; cursor: pointer; font-size: 11px;">Configure Features</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Recent Transactions Ledger -->
+            <section class="content-section">
+                <h3 class="section-title">Recent Subscription Receipts</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Company Profile</th>
+                                <th>Subscription Plan</th>
+                                <th>Billing Cycle</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#INV-2026-0819</strong></td>
+                                <td>TechCorp Inc.</td>
+                                <td><span class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy);">Professional</span></td>
+                                <td>Monthly recurring</td>
+                                <td><strong>$149.00</strong></td>
+                                <td><span class="status-badge active">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#INV-2026-0818</strong></td>
+                                <td>DesignStudio</td>
+                                <td><span class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy);">Professional</span></td>
+                                <td>Monthly recurring</td>
+                                <td><strong>$149.00</strong></td>
+                                <td><span class="status-badge active">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#INV-2026-0817</strong></td>
+                                <td>FinTech Solutions</td>
+                                <td><span class="status-badge active" style="background: rgba(59,130,246,0.08); color: #3b82f6;">Enterprise</span></td>
+                                <td>Annual cycle</td>
+                                <td><strong>$4,990.00</strong></td>
+                                <td><span class="status-badge active">Paid</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+        PAGE 5: AUDIT LOGS
+        ========================================== -->
+        <div class="page-content hidden" id="page-logs">
+            <section class="content-section">
+                <h3 class="section-title">System & Security Logs</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="dot burgundy"></span>
+                        <span><strong>Admin mod@stackly.com</strong> changed global maintenance configurations</span>
+                        <span class="time">12 min ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot green"></span>
+                        <span>Employer <strong>TechCorp Inc.</strong> registered successfully (User account #1284)</span>
+                        <span class="time">1 hour ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot orange"></span>
+                        <span>User account <strong>james@lee.dev</strong> suspended for policy violation</span>
+                        <span class="time">2 hours ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot blue"></span>
+                        <span>Job Listing <strong>Frontend Developer</strong> approved by Admin</span>
+                        <span class="time">4 hours ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot purple"></span>
+                        <span>Database migration and backup executed successfully</span>
+                        <span class="time">6 hours ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="dot pink"></span>
+                        <span>API Access Key rotated for suspended user <strong>David Zhang</strong></span>
+                        <span class="time">12 hours ago</span>
+                    </div>
+                </div>
+            <!-- Section 2: Log Archival & Retention Settings -->
+            <section class="content-section">
+                <h3 class="section-title">Log Retention & Archival</h3>
+                <div class="settings-group">
+                    <h4>Administrative Controls</h4>
+                    <p>Export historical logs or configure server storage cleaning cycles.</p>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Download Audit Trails</div>
+                            <div class="desc">Download complete CSV log reports for security audits.</div>
+                        </div>
+                        <a href="404.html" class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy); border: none; cursor: pointer; padding: 6px 14px; font-weight: 500; display: inline-block; text-decoration: none;">Export logs (CSV)</a>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Auto-Archive After 90 Days</div>
+                            <div class="desc">Compress and store logs older than 90 days in remote AWS S3 cold storage.</div>
+                        </div>
+                        <div class="toggle active" id="archiveToggle"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Live Active Admin Sessions -->
+            <section class="content-section">
+                <h3 class="section-title">Active Administrative Sessions</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Admin User</th>
+                                <th>Session IP</th>
+                                <th>Client / Browser</th>
+                                <th>Login Timestamp</th>
+                                <th>Session Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>elena@stackly.com</strong></td>
+                                <td>203.0.113.88</td>
+                                <td>Chrome v114 (macOS)</td>
+                                <td>Aug 18, 07:02:15 UTC</td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">Active Now</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>mod@stackly.com</strong></td>
+                                <td>198.51.100.10</td>
+                                <td>Firefox v112 (Windows)</td>
+                                <td>Aug 18, 06:12:44 UTC</td>
+                                <td><span class="status-badge pending" style="background: rgba(245,158,11,0.1); color: #d97706;">Idle 14m</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+        PAGE 6: SYSTEM CONFIG
+        ========================================== -->
+        <div class="page-content hidden" id="page-system">
+            <section class="content-section">
+                <h3 class="section-title">Global Application Configurations</h3>
+                
+                <div class="settings-group">
+                    <h4>Operations & Maintenance</h4>
+                    <p>Configure general parameters and platform operations.</p>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Debug Logging Level</div>
+                            <div class="desc">Show trace, warning, and error outputs in server console.</div>
+                        </div>
+                        <div class="toggle active" id="debugToggle"></div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Automatic Maintenance Window</div>
+                            <div class="desc">Execute automated backups and db optimizations at 02:00 UTC.</div>
+                        </div>
+                        <div class="toggle active" id="maintenanceWindowToggle"></div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h4>Integrations & Mail</h4>
+                    <p>Configure communication protocols and webhook parameters.</p>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">SendGrid SMTP Server Integration</div>
+                            <div class="desc">Route outbound system emails through sendgrid.net SMTP server.</div>
+                        </div>
+                        <div class="toggle active" id="smtpToggle"></div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">IP Rate Limiting (Web App Firewall)</div>
+                            <div class="desc">Block clients exceeding 100 requests per minute.</div>
+                        </div>
+                        <div class="toggle active" id="rateLimitToggle"></div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h4>Security Credentials & Keys</h4>
+                    <p>Manage integrations and API access tokens.</p>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">API Developer Access</div>
+                            <div class="desc">Enable external apps to query candidate pools via REST endpoints.</div>
+                        </div>
+                        <div class="toggle" id="developerToggle"></div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Webhooks Secret Key Rotation</div>
+                            <div class="desc">Rotate secret verification salts for payment webhooks.</div>
+                        </div>
+                        <a href="404.html" class="status-badge active" style="background: rgba(139,15,58,0.08); color: var(--color-burgundy); border: none; cursor: pointer; padding: 6px 14px; font-weight: 500; display: inline-block; text-decoration: none;">Rotate Key</a>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h4>Database Backups & Recovery</h4>
+                    <p>Restore system state from historical system snapshots.</p>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Primary DB Snapshot (1.2 GB)</div>
+                            <div class="desc">Created Aug 18, 2026, 02:00 UTC (Scheduled task).</div>
+                        </div>
+                        <a href="404.html" class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; padding: 6px 14px; font-weight: 500; display: inline-block; text-decoration: none;">Restore Snapshot</a>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="label">Cold Storage Database Dump (842 MB)</div>
+                            <div class="desc">Created Aug 11, 2026, 02:00 UTC (Weekly backup).</div>
+                        </div>
+                        <a href="404.html" class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a; border: none; cursor: pointer; padding: 6px 14px; font-weight: 500; display: inline-block; text-decoration: none;">Restore Snapshot</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+        PAGE 7: SUPPORT TICKETS
+        ========================================== -->
+        <div class="page-content hidden" id="page-tickets">
+            <section class="content-section">
+                <h3 class="section-title">User Support & Inquiries</h3>
+                <div class="candidate-table-wrap">
+                    <table class="candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>User</th>
+                                <th>Subject</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Received</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#TK-4029</strong></td>
+                                <td>employer@innovate.co</td>
+                                <td>Unable to upload corporate logo on profile</td>
+                                <td><span class="status-badge pending" style="background: rgba(245,158,11,0.1); color: #d97706;">Medium</span></td>
+                                <td><span class="status-badge pending">Awaiting Staff</span></td>
+                                <td>3 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TK-4028</strong></td>
+                                <td>candidate@lee.dev</td>
+                                <td>GDPR data removal request</td>
+                                <td><span class="status-badge closed" style="background: rgba(239,68,68,0.1); color: #dc2626;">High</span></td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">Assigned</span></td>
+                                <td>5 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TK-4027</strong></td>
+                                <td>recruiter@vance.com</td>
+                                <td>Invoice dispute for July contract hiring</td>
+                                <td><span class="status-badge pending" style="background: rgba(245,158,11,0.1); color: #d97706;">Medium</span></td>
+                                <td><span class="status-badge active" style="background: rgba(34,197,94,0.1); color: #16a34a;">In Progress</span></td>
+                                <td>1 day ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- ==========================================
+    JAVASCRIPT FOR TABS, RESPONSIVENESS & CHART.JS
+    ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // =============================================
+            // 1. DATE GREETING
+            // =============================================
+            const dateEl = document.getElementById('todayDate');
+            if (dateEl) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateEl.textContent = new Date().toLocaleDateString('en-US', options);
+            }
+
+            // =============================================
+            // 2. MOBILE RESPONSIVE SIDEBAR
+            // =============================================
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+
+            function openSidebar() {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('open');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
+            }
+
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebar);
+            if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+            // =============================================
+            // 3. TAB CONTROLLER & ROUTING
+            // =============================================
+            const navItems = document.querySelectorAll('#navList li');
+            const pages = document.querySelectorAll('.page-content');
+            const pageTitle = document.getElementById('pageTitle');
+            const pageSub = document.getElementById('pageSub');
+
+            const pageConfigs = {
+                dashboard: { title: 'Platform Overview', desc: 'Welcome back, Admin — manage your recruitment ecosystem' },
+                users: { title: 'User Management', desc: 'Monitor, edit, and moderate registered user accounts' },
+                listings: { title: 'Employer Listings', desc: 'Review, approve, and manage posted job listings' },
+                subscriptions: { title: 'Revenue & Subscriptions', desc: 'Track premium earnings and plan tiers' },
+                logs: { title: 'Audit Logs', desc: 'Review security actions and system operations history' },
+                system: { title: 'System Configuration', desc: 'Manage system behaviors, settings, and deployments' },
+                tickets: { title: 'Support Tickets', desc: 'Manage and resolve active customer support tickets' }
+            };
+
+            function navigateTo(pageId) {
+                pages.forEach(page => {
+                    if (page.id === `page-${pageId}`) {
+                        page.classList.remove('hidden');
+                    } else {
+                        page.classList.add('hidden');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    if (item.getAttribute('data-page') === pageId) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+
+                // Update headers
+                if (pageConfigs[pageId]) {
+                    if (pageTitle) pageTitle.textContent = pageConfigs[pageId].title;
+                    if (pageSub) pageSub.innerHTML = pageConfigs[pageId].desc;
+                }
+
+                // Render respective charts when navigated to prevent rendering bugs
+                if (pageId === 'dashboard') {
+                    setTimeout(renderPlatformLineChart, 100);
+                } else if (pageId === 'subscriptions') {
+                    setTimeout(renderSubscriptionsCharts, 100);
+                }
+
+                closeSidebar();
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const pageId = item.getAttribute('data-page');
+                    navigateTo(pageId);
+                });
+            });
+
+            // =============================================
+            // 4. CHART CONFIGURATIONS & DRAWING
+            // =============================================
+            const colors = {
+                burgundy: '#8B0F3A',
+                blue: '#3b82f6',
+                teal: '#0d9488',
+                orange: '#f59e0b',
+                purple: '#7c3aed',
+                green: '#16a34a',
+                gray: '#5c6075',
+                white: '#ffffff'
+            };
+
+            let chartInstances = {};
+
+            function getChartContext(canvasId) {
+                const canvas = document.getElementById(canvasId);
+                return canvas ? canvas.getContext('2d') : null;
+            }
+
+            function renderPlatformLineChart() {
+                const ctx = getChartContext('adminLineChart');
+                if (!ctx) return;
+                if (chartInstances['adminLineChart']) {
+                    chartInstances['adminLineChart'].destroy();
+                }
+
+                chartInstances['adminLineChart'] = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                        datasets: [{
+                            label: 'API Requests (k)',
+                            data: [120, 150, 180, 220, 280, 314],
+                            borderColor: colors.burgundy,
+                            backgroundColor: 'rgba(139,15,58,0.06)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: colors.burgundy,
+                            pointBorderColor: colors.white,
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }, {
+                            label: 'Active Sessions',
+                            data: [800, 1100, 1400, 1900, 2400, 3100],
+                            borderColor: colors.blue,
+                            backgroundColor: 'rgba(59,130,246,0.06)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: colors.blue,
+                            pointBorderColor: colors.white,
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top', labels: { boxWidth: 12, padding: 14 } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            function renderSubscriptionsCharts() {
+                // Plan Tier Doughnut
+                const ctxDoughnut = getChartContext('subsDoughnutChart');
+                if (ctxDoughnut) {
+                    if (chartInstances['subsDoughnutChart']) chartInstances['subsDoughnutChart'].destroy();
+                    chartInstances['subsDoughnutChart'] = new Chart(ctxDoughnut, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Standard', 'Professional', 'Corporate Enterprise'],
+                            datasets: [{
+                                data: [640, 280, 42],
+                                backgroundColor: [colors.gray, colors.burgundy, colors.blue],
+                                borderColor: colors.white,
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10 } }
+                            },
+                            cutout: '60%'
+                        }
+                    });
+                }
+
+                // Monthly Revenue Bar
+                const ctxBar = getChartContext('subsBarChart');
+                if (ctxBar) {
+                    if (chartInstances['subsBarChart']) chartInstances['subsBarChart'].destroy();
+                    chartInstances['subsBarChart'] = new Chart(ctxBar, {
+                        type: 'bar',
+                        data: {
+                            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                            datasets: [{
+                                label: 'Earnings ($)',
+                                data: [21000, 26000, 32000, 35000, 39000, 44200],
+                                backgroundColor: colors.burgundy,
+                                borderRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                                x: { grid: { display: false } }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // =============================================
+            // 5. TOGGLES
+            // =============================================
+            document.querySelectorAll('.toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+
+            // =============================================
+            // 6. USER INFO & LOGOUT
+            // =============================================
+            const storedEmail = localStorage.getItem('auth_email') || 'admin@stackly.com';
+            let firstname = storedEmail.split('@')[0];
+            firstname = firstname.charAt(0).toUpperCase() + firstname.slice(1);
+
+            // Styled text in burgundy color with little boldness
+            const userHTML = `<span style="color: var(--color-burgundy); font-weight: 600;">${firstname}</span>`;
+
+            // Update Email display on sidebar footer
+            const userEmailEl = document.getElementById('userEmail');
+            if (userEmailEl) {
+                userEmailEl.textContent = storedEmail;
+            }
+
+            // Update setting email helper if present
+            const settingsEmailEl = document.getElementById('settingsEmail');
+            if (settingsEmailEl) {
+                settingsEmailEl.textContent = storedEmail;
+            }
+
+            // Set greeting name placeholders
+            const userNameEl = document.getElementById('userName');
+            if (userNameEl) {
+                userNameEl.innerHTML = userHTML;
+            }
+
+            const mobilePlaceholder = document.querySelector('.mobile-username-placeholder');
+            if (mobilePlaceholder) {
+                mobilePlaceholder.innerHTML = userHTML;
+            }
+
+            // Update dynamic dashboard sub-template description
+            pageConfigs.dashboard.desc = `Welcome back, ${userHTML} — manage your recruitment ecosystem`;
+
+            // Setup logout button callback
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('auth_email');
+                    localStorage.removeItem('auth_username');
+                    localStorage.removeItem('auth_role');
+                    window.location.href = '../index.html';
+                });
+            }
+
+            // =============================================
+            // 7. INITIAL ROUTING
+            // =============================================
+            navigateTo('dashboard');
+
+        });
+    </script>
+</body>
+</html>

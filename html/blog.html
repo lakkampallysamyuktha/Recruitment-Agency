@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Stackly Recruitment Agency</title>
+  <meta name="description" content="Read career advice, recruitment trends, and industry insights on the Stackly Blog.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../global.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+
+  <!-- Reusable Common Header -->
+  <div id="common-header">
+    <header class="site-header">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="../index.html" class="header-logo-link" id="nav-logo-link">
+          <img src="../assets/logo.webp" alt="Stackly Logo" class="header-logo" id="nav-logo-img">
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="header-nav" aria-label="Main Navigation">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="../index.html" class="nav-link" id="nav-home">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link" id="nav-about">About</a></li>
+            <li class="nav-item"><a href="service.html" class="nav-link" id="nav-service">Service</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link active" id="nav-blog">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Login & Signup Buttons -->
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-login">Login</a>
+          <a href="signup.html" class="btn btn-signup">Signup</a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Drawer Menu -->
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-header">
+          <img src="../assets/logo.webp" alt="Stackly Logo" class="mobile-logo" id="mobile-logo-img">
+          <button class="mobile-close-btn" id="mobile-close-toggle" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="mobile-nav">
+          <ul class="mobile-nav-list">
+            <li><a href="../index.html" class="mobile-nav-link" id="mobile-nav-home">Home</a></li>
+            <li><a href="about.html" class="mobile-nav-link" id="mobile-nav-about">About</a></li>
+            <li><a href="service.html" class="mobile-nav-link" id="mobile-nav-service">Service</a></li>
+            <li><a href="blog.html" class="mobile-nav-link active" id="mobile-nav-blog">Blog</a></li>
+            <li><a href="contact.html" class="mobile-nav-link" id="mobile-nav-contact">Contact</a></li>
+          </ul>
+          <div class="mobile-actions">
+            <a href="login.html" class="btn btn-login mobile-btn">Login</a>
+            <a href="signup.html" class="btn btn-signup mobile-btn">Signup</a>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile-menu-backdrop" id="mobile-backdrop"></div>
+    </header>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+  <!-- Blog Hero Section -->
+  <section class="blog-hero-section">
+    <div class="blog-hero-container">
+      <div class="blog-hero-card reveal-from-bottom">
+        <!-- Background image -->
+        <img src="../assets/blog/hero.webp" alt="Hands shaking over a deal" class="blog-hero-bg">
+        <!-- Overlay -->
+        <div class="blog-hero-overlay"></div>
+        <!-- Content -->
+        <div class="blog-hero-content">
+          <span class="blog-hero-label reveal-from-top">Our Blog</span>
+          <h1 class="blog-hero-title reveal-from-left delay-1">Recruitment insights to<br>help you hire smarter</h1>
+          <p class="blog-hero-desc reveal-from-right delay-2">Articles sharing hiring trends, recruitment strategies, and HR best practices for growing teams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Insights & Updates Section -->
+  <section class="blog-latest-section">
+    <div class="blog-latest-container">
+      <h2 class="blog-latest-section-title reveal-from-bottom">Latest Insights &amp; Updates</h2>
+      
+      <!-- 2x2 Grid -->
+      <div class="blog-posts-grid">
+        
+        <!-- Post 1 -->
+        <article class="blog-post-card reveal-from-bottom">
+          <div class="blog-post-img-wrapper">
+            <img src="../assets/blog/latest_1.webp" alt="Meeting at modern conference room" class="blog-post-img">
+          </div>
+          <div class="blog-post-content">
+            <h3 class="blog-post-title">What Top Candidates Look For In Employers</h3>
+            <p class="blog-post-desc">Understand what professionals value when evaluating employers, from company culture and flexibility to growth opportunities.</p>
+            <a href="404.html" class="blog-post-link">Discover More <span class="post-link-arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="blog-post-card reveal-from-bottom delay-1">
+          <div class="blog-post-img-wrapper">
+            <img src="../assets/blog/latest_2.webp" alt="Team meeting and discussion" class="blog-post-img">
+          </div>
+          <div class="blog-post-content">
+            <h3 class="blog-post-title">How To Attract Top Talent In Markets</h3>
+            <p class="blog-post-desc">Learn strategies for attracting candidates, strengthening your employer brand, and standing out in today's competitive job market.</p>
+            <a href="404.html" class="blog-post-link">Discover More <span class="post-link-arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="blog-post-card reveal-from-bottom">
+          <div class="blog-post-img-wrapper">
+            <img src="../assets/blog/latest_3.webp" alt="Collaborating at work table" class="blog-post-img">
+          </div>
+          <div class="blog-post-content">
+            <h3 class="blog-post-title">The Evolution of Remote Work: What's Next?</h3>
+            <p class="blog-post-desc">Explore how remote work policies are shifting, and what companies must do to sustain productivity and employee satisfaction.</p>
+            <a href="404.html" class="blog-post-link">Discover More <span class="post-link-arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Post 4 -->
+        <article class="blog-post-card reveal-from-bottom delay-1">
+          <div class="blog-post-img-wrapper">
+            <img src="../assets/blog/latest_4.webp" alt="Handshake in corporate office" class="blog-post-img">
+          </div>
+          <div class="blog-post-content">
+            <h3 class="blog-post-title">Mastering Executive Search: Key Sourcing Trends</h3>
+            <p class="blog-post-desc">Discover how headhunters identify, engage, and successfully hire top executive talent in highly niche sectors.</p>
+            <a href="404.html" class="blog-post-link">Discover More <span class="post-link-arrow">→</span></a>
+          </div>
+        </article>
+
+      </div>
+  <!-- Popular Blog Section -->
+  <section class="blog-popular-section">
+    <div class="blog-popular-container">
+      <h2 class="blog-popular-section-title reveal-from-bottom">Popular Blog</h2>
+      
+      <!-- 3-column Grid -->
+      <div class="blog-popular-grid">
+        
+        <!-- Popular Post 1 -->
+        <article class="blog-popular-card reveal-from-bottom">
+          <div class="blog-popular-img-wrapper">
+            <img src="../assets/blog/popular_1.webp" alt="Neon sign saying this must be the place" class="blog-popular-img">
+          </div>
+          <div class="blog-popular-content">
+            <div class="blog-popular-meta">
+              <span class="blog-meta-tag tag-hiring">Hiring</span>
+              <span class="blog-meta-date">Jan 1, 2026</span>
+            </div>
+            <h3 class="blog-popular-title">Hiring Smarter, Not Harder: Automation Tools Every HR</h3>
+            <p class="blog-popular-desc">Discover the essential automation features- resume parsing, scheduling, dashboards,</p>
+          </div>
+        </article>
+
+        <!-- Popular Post 2 -->
+        <article class="blog-popular-card reveal-from-bottom delay-1">
+          <div class="blog-popular-img-wrapper">
+            <img src="../assets/blog/popular_2.webp" alt="Finger pointing at viewer" class="blog-popular-img">
+          </div>
+          <div class="blog-popular-content">
+            <div class="blog-popular-meta">
+              <span class="blog-meta-tag tag-hiring">Hiring</span>
+              <span class="blog-meta-date">Jan 1, 2026</span>
+            </div>
+            <h3 class="blog-popular-title">Candidate Experience Matters More Than Ever- Here's Why</h3>
+            <p class="blog-popular-desc">Discover the essential automation features- resume parsing, scheduling, dashboards,</p>
+          </div>
+        </article>
+
+        <!-- Popular Post 3 -->
+        <article class="blog-popular-card reveal-from-bottom delay-2">
+          <div class="blog-popular-img-wrapper">
+            <img src="../assets/blog/popular_3.webp" alt="Goals blackboard sheet with notes" class="blog-popular-img">
+          </div>
+          <div class="blog-popular-content">
+            <div class="blog-popular-meta">
+              <span class="blog-meta-tag tag-hiring">Hiring</span>
+              <span class="blog-meta-date">Jan 1, 2026</span>
+            </div>
+            <h3 class="blog-popular-title">Why Traditional Recruitment Software Is No Longer Enough</h3>
+            <p class="blog-popular-desc">Legacy systems slow down hiring. Modern AI platforms provide automation, analytics,</p>
+          </div>
+        </article>
+
+        <!-- Popular Post 4 -->
+        <article class="blog-popular-card reveal-from-bottom">
+          <div class="blog-popular-img-wrapper">
+            <img src="../assets/blog/popular_4.webp" alt="Woman viewing a job board board" class="blog-popular-img">
+          </div>
+          <div class="blog-popular-content">
+            <div class="blog-popular-meta">
+              <span class="blog-meta-tag tag-future">Future</span>
+              <span class="blog-meta-date">Jan 1, 2026</span>
+            </div>
+            <h3 class="blog-popular-title">Real-Time Skill Matching: The Next Big Shift in Workforce</h3>
+            <p class="blog-popular-desc">Discover the essential automation features- resume parsing, scheduling, dashboards,</p>
+          </div>
+        </article>
+
+        <!-- Popular Post 5 -->
+        <article class="blog-popular-card reveal-from-bottom delay-1">
+          <div class="blog-popular-img-wrapper">
+            <img src="../assets/blog/popular_5.webp" alt="Aim High fly higher quote frame" class="blog-popular-img">
+          </div>
+          <div class="blog-popular-content">
+            <div class="blog-popular-meta">
+              <span class="blog-meta-tag tag-ai">AI World</span>
+              <span class="blog-meta-date">Jan 1, 2026</span>
+            </div>
+            <h3 class="blog-popular-title">Breaking: How Machine Learning Creates Fair Recruitment</h3>
+            <p class="blog-popular-desc">Smart algorithms are helping companies reduce bias, improve diversity, and build inclusive</p>
+          </div>
+        </article>
+
+        <!-- Popular Post 6 -->
+        <article class="blog-popular-card reveal-from-bottom delay-2">
+          <div class="blog-popular-img-wrapper">
+            <img src="../assets/blog/popular_6.webp" alt="Laptop showing talent platform screen" class="blog-popular-img">
+          </div>
+          <div class="blog-popular-content">
+            <div class="blog-popular-meta">
+              <span class="blog-meta-tag tag-ai">AI World</span>
+              <span class="blog-meta-date">Jan 1, 2026</span>
+            </div>
+            <h3 class="blog-popular-title">The Future of Hiring: AI-Driven Talent Selection</h3>
+            <p class="blog-popular-desc">AI is transforming how HR teams discover talent, automate screening,</p>
+          </div>
+        </article>
+
+      </div>
+  </section>
+
+  <!-- Insights and Inspiration Section -->
+  <section class="blog-inspiration-section">
+    <div class="blog-inspiration-container">
+      <div class="blog-inspiration-header">
+        <h2 class="blog-inspiration-title reveal-from-left">Insights and inspiration</h2>
+        <p class="blog-inspiration-subtitle reveal-from-right delay-1">Stay informed with expert tips, industry trends, and valuable resources to elevate your success</p>
+      </div>
+
+      <!-- List of Articles -->
+      <div class="blog-inspiration-list">
+
+        <!-- Item 1 -->
+        <article class="inspiration-item reveal-from-bottom">
+          <div class="inspiration-img-wrapper">
+            <img src="../assets/blog/insights_1.webp" alt="LinkedIn Recruiter Lite screen" class="inspiration-img">
+          </div>
+          <div class="inspiration-content">
+            <span class="inspiration-date">January 29, 2025</span>
+            <h3 class="inspiration-item-title">The role of data-driven recruitment in making smarter hires</h3>
+            <p class="inspiration-item-desc">Harness the power of data to improve hiring decisions and create high-performance teams</p>
+            <a href="404.html" class="inspiration-link">Read more</a>
+          </div>
+        </article>
+
+        <!-- Item 2 -->
+        <article class="inspiration-item reveal-from-bottom">
+          <div class="inspiration-img-wrapper">
+            <img src="../assets/blog/insights_2.webp" alt="JOBS 3D letters block" class="inspiration-img">
+          </div>
+          <div class="inspiration-content">
+            <span class="inspiration-date">January 29, 2025</span>
+            <h3 class="inspiration-item-title">How to attract top talent with employer branding</h3>
+            <p class="inspiration-item-desc">Discover strategies to build a compelling employer brand that resonates with top candidates</p>
+            <a href="404.html" class="inspiration-link">Read more</a>
+          </div>
+        </article>
+
+        <!-- Item 3 -->
+        <article class="inspiration-item reveal-from-bottom">
+          <div class="inspiration-img-wrapper">
+            <img src="../assets/blog/insights_3.webp" alt="Interview and handshake in office" class="inspiration-img">
+          </div>
+          <div class="inspiration-content">
+            <span class="inspiration-date">January 29, 2025</span>
+            <h3 class="inspiration-item-title">Why company culture is crucial in recruitment</h3>
+            <p class="inspiration-item-desc">Learn how a strong cultural fit improves employee retention and drives organizational success</p>
+            <a href="404.html" class="inspiration-link">Read more</a>
+          </div>
+        </article>
+
+        <!-- Item 4 -->
+        <article class="inspiration-item reveal-from-bottom">
+          <div class="inspiration-img-wrapper">
+            <img src="../assets/blog/insights_4.webp" alt="Team talking at workplace" class="inspiration-img">
+          </div>
+          <div class="inspiration-content">
+            <span class="inspiration-date">January 29, 2025</span>
+            <h3 class="inspiration-item-title">How tailored recruitment strategies drive business success</h3>
+            <p class="inspiration-item-desc">Maximize the potential of your workforce by aligning recruitment efforts with your company's unique culture and goals</p>
+            <a href="404.html" class="inspiration-link">Read more</a>
+          </div>
+        </article>
+
+      </div>
+  </section>
+
+  <!-- Trending Topics Section -->
+  <section class="blog-trending-section">
+    <div class="blog-trending-container">
+      <div class="blog-trending-left reveal-from-left">
+        <span class="trending-label">Trending Topics</span>
+        <h2 class="trending-title">Explore what is shaping the future of work</h2>
+        <div class="trending-topics-list">
+          <div class="trending-topic-item active">
+            <span class="topic-number">01</span>
+            <span class="topic-name">Recruitment Technology &amp; AI</span>
+          </div>
+          <div class="trending-topic-item">
+            <span class="topic-number">02</span>
+            <span class="topic-name">Diversity, Equity &amp; Inclusion</span>
+          </div>
+          <div class="trending-topic-item">
+            <span class="topic-number">03</span>
+            <span class="topic-name">Remote Leadership &amp; Hiring</span>
+          </div>
+          <div class="trending-topic-item">
+            <span class="topic-number">04</span>
+            <span class="topic-name">Mental Health &amp; Workplace Culture</span>
+          </div>
+        </div>
+      </div>
+      <div class="blog-trending-right reveal-from-right delay-2">
+        <div class="trending-featured-card">
+          <img src="../assets/home/leader_img.webp" alt="Team meeting discussion" class="trending-featured-img">
+          <div class="trending-card-overlay"></div>
+          <div class="trending-card-content">
+            <span class="trending-card-tag" style="color: var(--color-white);">Featured Insight</span>
+            <h3 class="trending-card-title">How leadership styles are evolving for modern remote workplaces</h3>
+            <a href="404.html" class="trending-card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Interview Section -->
+  <section class="blog-interview-section">
+    <div class="blog-interview-container">
+      <!-- Left Column: Image Wrapper -->
+      <div class="blog-interview-left reveal-from-left">
+        <div class="interview-img-wrapper">
+          <img src="../assets/about/fi_1.webp" alt="Business professionals shaking hands" class="interview-img">
+        </div>
+      </div>
+      <!-- Right Column: Quote Content -->
+      <div class="blog-interview-right reveal-from-right delay-2">
+        <div class="interview-quote-box">
+          <span class="quote-sign">“</span>
+          <h2 class="interview-quote-text">The key to scaling a high-growth company is not just hiring skills, it is hiring core alignment and vision.</h2>
+          <div class="interview-author">
+            <span class="author-name">Sarah Jenkins</span>
+            <span class="author-role">Director of Talent Acquisition at Stackly</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Write for Us / Contributor Network Section -->
+  <section class="blog-write-section">
+    <div class="blog-write-container">
+      <div class="blog-write-content reveal-from-left">
+        <span class="blog-write-label">Contributor Network</span>
+        <h2 class="blog-write-title">Share your recruitment insights with the world</h2>
+        <p class="blog-write-desc">
+          Are you an HR expert, technical founder, or recruiter? Write for Stackly's Insights blog and share your hiring strategies, culture frameworks, or industry perspectives with our growing audience of 10,000+ monthly readers.
+        </p>
+        <a href="contact.html" class="btn-blog-write">Apply as Contributor</a>
+      </div>
+      <div class="blog-write-stats reveal-from-right delay-2">
+        <div class="write-stat-card">
+          <div class="write-stat-val">10K+</div>
+          <div class="write-stat-lbl">Monthly Readers</div>
+        </div>
+        <div class="write-stat-card">
+          <div class="write-stat-val">500+</div>
+          <div class="write-stat-lbl">Published Articles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Reusable Common Footer -->
+  <div id="common-footer">
+    <footer class="site-footer" id="site-footer">
+      <div class="footer-container">
+        
+        <!-- Top Footer Main Grid -->
+        <div class="footer-top-grid">
+          
+          <!-- Column 1: Brand Logo, Desc & Social Icons -->
+          <div class="footer-col footer-col-brand">
+            <a href="../index.html" class="footer-logo-link" id="footer-logo-link">
+              <img src="../assets/logo.webp" alt="Stackly Logo" class="footer-logo" id="footer-logo-img">
+            </a>
+            <p class="footer-brand-desc">
+              Empowering companies and extraordinary talent with modern HR recruitment & executive search solutions.
+            </p>
+            
+            <!-- Popular Social Icons: LinkedIn, X, Instagram, YouTube -->
+            <div class="footer-social-links" aria-label="Social Media Links">
+              <a href="404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.77a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+                </svg>
+              </a>
+              <a href="404.html" class="social-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div class="footer-col">
+            <h3 class="footer-col-title">Quick Links</h3>
+            <ul class="footer-nav-list">
+              <li><a href="../index.html" class="footer-link" id="footer-nav-home">Home</a></li>
+              <li><a href="about.html" class="footer-link" id="footer-nav-about">About</a></li>
+              <li><a href="service.html" class="footer-link" id="footer-nav-service">Service</a></li>
+              <li><a href="blog.html" class="footer-link active" id="footer-nav-blog">Blog</a></li>
+              <li><a href="contact.html" class="footer-link" id="footer-nav-contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Solutions -->
+          <div class="footer-col">
+            <h3 class="footer-col-title">Solutions</h3>
+            <ul class="footer-nav-list">
+              <li><a href="404.html" class="footer-link">Executive Search</a></li>
+              <li><a href="404.html" class="footer-link">Contract Staffing</a></li>
+              <li><a href="404.html" class="footer-link">Direct Hire</a></li>
+              <li><a href="404.html" class="footer-link">RPO Advisory</a></li>
+              <li><a href="404.html" class="footer-link">Tech Sourcing</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Stay Updated -->
+          <div class="footer-col footer-col-subscribe">
+            <h3 class="footer-col-title">Stay Updated</h3>
+            <p class="footer-subscribe-desc">
+              Get weekly tech talent insights & market salary reports.
+            </p>
+            
+            <form class="footer-subscribe-form" id="footer-subscribe-form" novalidate>
+              <div class="input-wrapper">
+                <input 
+                  type="email" 
+                  id="footer-email-input" 
+                  class="footer-email-input" 
+                  placeholder="Enter your email" 
+                  required 
+                  aria-label="Enter your email address"
+                >
+                <button type="submit" class="btn btn-subscribe">Subscribe</button>
+              </div>
+              <div class="form-feedback-msg" id="footer-form-msg" aria-live="polite"></div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Bottom Legal Row -->
+        <div class="footer-bottom-row">
+          <div class="footer-legal-links">
+            <a href="404.html" class="footer-legal-link">Privacy Policy</a>
+            <a href="404.html" class="footer-legal-link">Terms of Service</a>
+            <a href="404.html" class="footer-legal-link">Security</a>
+          </div>
+          <div class="footer-copyright">
+            &copy; 2026 Stackly Recruitment Agency. All rights reserved.
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/common.js"></script>
+  <script src="../js/blog.js"></script>
+</body>
+</html>

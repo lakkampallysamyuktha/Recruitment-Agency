@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - Stackly Recruitment Agency</title>
+  <meta name="description" content="Discover professional recruitment and talent acquisition services provided by Stackly.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../global.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/service.css">
+</head>
+<body>
+
+  <!-- Reusable Common Header -->
+  <div id="common-header">
+    <header class="site-header">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="../index.html" class="header-logo-link" id="nav-logo-link">
+          <img src="../assets/logo.webp" alt="Stackly Logo" class="header-logo" id="nav-logo-img">
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="header-nav" aria-label="Main Navigation">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="../index.html" class="nav-link" id="nav-home">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link" id="nav-about">About</a></li>
+            <li class="nav-item"><a href="service.html" class="nav-link active" id="nav-service">Service</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link" id="nav-blog">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Login & Signup Buttons -->
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-login">Login</a>
+          <a href="signup.html" class="btn btn-signup">Signup</a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Drawer Menu -->
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-header">
+          <img src="../assets/logo.webp" alt="Stackly Logo" class="mobile-logo" id="mobile-logo-img">
+          <button class="mobile-close-btn" id="mobile-close-toggle" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="mobile-nav">
+          <ul class="mobile-nav-list">
+            <li><a href="../index.html" class="mobile-nav-link" id="mobile-nav-home">Home</a></li>
+            <li><a href="about.html" class="mobile-nav-link" id="mobile-nav-about">About</a></li>
+            <li><a href="service.html" class="mobile-nav-link active" id="mobile-nav-service">Service</a></li>
+            <li><a href="blog.html" class="mobile-nav-link" id="mobile-nav-blog">Blog</a></li>
+            <li><a href="contact.html" class="mobile-nav-link" id="mobile-nav-contact">Contact</a></li>
+          </ul>
+          <div class="mobile-actions">
+            <a href="login.html" class="btn btn-login mobile-btn">Login</a>
+            <a href="signup.html" class="btn btn-signup mobile-btn">Signup</a>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile-menu-backdrop" id="mobile-backdrop"></div>
+    </header>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+  <!-- Service Hero Section -->
+  <section class="svc-hero-section">
+    <div class="svc-hero-container">
+
+      <!-- Left: Text Panel -->
+      <div class="svc-hero-left reveal-from-left">
+        <span class="svc-hero-label">Our Services</span>
+        <h1 class="svc-hero-title">How Hired Stackly<br>Can Help</h1>
+        <p class="svc-hero-desc">
+          Do you know what could beat the exciting feeling of having a new computer? Make your own.
+          Making your own computer from scratch is not only fun to do but cheaper as well.
+        </p>
+        <a href="contact.html" class="btn btn-svc-hero">Learn more</a>
+      </div>
+
+      <!-- Right: Image Panel -->
+      <div class="svc-hero-right reveal-from-right delay-2">
+        <div class="svc-hero-img-wrapper">
+          <img src="../assets/service/hero.webp" alt="Stackly recruitment professionals in a meeting" class="svc-hero-img">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Services Bento Section -->
+  <section class="svc-bento-section">
+    <div class="svc-bento-container">
+
+      <!-- Section Header -->
+      <div class="svc-bento-header reveal-from-bottom">
+        <h2 class="svc-bento-title">What can we<br>actually do for your business?</h2>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="svc-bento-grid">
+
+        <!-- Card 1 — Wide (spans 2 cols) — Charcoal -->
+        <div class="svc-card svc-card--charcoal svc-card--wide reveal-from-left delay-1">
+          <div class="svc-card-inner">
+            <h3 class="svc-card-title">Corporate Trainings</h3>
+            <p class="svc-card-desc">Improvement of workplace efficiency, productivity, communication &amp; employee morale across all departments.</p>
+            <a href="404.html" class="svc-card-link">View More →</a>
+          </div>
+        </div>
+
+        <!-- Card 2 — Regular — Burgundy -->
+        <div class="svc-card svc-card--burgundy reveal-from-right delay-2">
+          <div class="svc-card-inner">
+            <h3 class="svc-card-title">Team Buildings</h3>
+            <p class="svc-card-desc">The process of turning a group of individual contributing employees into a cohesive team.</p>
+            <a href="404.html" class="svc-card-link">View More →</a>
+          </div>
+        </div>
+
+        <!-- Card 3 — Regular — White -->
+        <div class="svc-card svc-card--white reveal-from-right delay-3">
+          <div class="svc-card-inner">
+            <h3 class="svc-card-title">Employment Law</h3>
+            <p class="svc-card-desc">A specialized legal field that helps people who work get their rights and benefits fully protected.</p>
+            <a href="404.html" class="svc-card-link">View More →</a>
+          </div>
+        </div>
+
+        <!-- Card 4 — Regular — White -->
+        <div class="svc-card svc-card--white reveal-from-left delay-1">
+          <div class="svc-card-inner">
+            <h3 class="svc-card-title">Health Care</h3>
+            <p class="svc-card-desc">Process of designing, creating, deploying and maintaining software for healthcare recruitment solutions.</p>
+            <a href="404.html" class="svc-card-link">View More →</a>
+          </div>
+        </div>
+
+        <!-- Card 5 — Regular — Charcoal -->
+        <div class="svc-card svc-card--charcoal reveal-from-bottom delay-2">
+          <div class="svc-card-inner">
+            <h3 class="svc-card-title">Employee Skill</h3>
+            <p class="svc-card-desc">Employee skill development is one of the most important aspects of a company's growth strategy.</p>
+            <a href="404.html" class="svc-card-link">View More →</a>
+          </div>
+        </div>
+
+        <!-- Card 6 — Wide (spans 2 cols) — Burgundy -->
+        <div class="svc-card svc-card--burgundy svc-card--wide reveal-from-right delay-3">
+          <div class="svc-card-inner">
+            <h3 class="svc-card-title">Employee Engagement</h3>
+            <p class="svc-card-desc">One of the most important things you can do to implement employee engagement is to plan a business strategy that aligns with your company culture.</p>
+            <a href="404.html" class="svc-card-link">View More →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Services For Job Seekers Section -->
+  <section class="svc-jobseeker-section">
+    <div class="svc-jobseeker-container">
+
+      <!-- Left: Text Panel -->
+      <div class="svc-jobseeker-left reveal-from-left">
+        <span class="svc-jobseeker-label">Services for Job Seekers</span>
+        <h2 class="svc-jobseeker-title">We do for you</h2>
+        <p class="svc-jobseeker-desc">
+          Our approach combines personalized strategies, advanced technology, and a deep understanding of your industry to deliver high-quality candidates efficiently. We provide recruitment solutions for temporary, contract, and permanent roles, helping you adapt to your changing workforce needs effectively.
+        </p>
+
+        <!-- 3×2 Link Grid -->
+        <div class="svc-jobseeker-links">
+          <a href="404.html" class="svc-jlink">On-the-job Trainings <span class="jlink-arrow">→</span></a>
+          <a href="404.html" class="svc-jlink">Interview Workshops <span class="jlink-arrow">→</span></a>
+          <a href="404.html" class="svc-jlink">High Volume Hiring <span class="jlink-arrow">→</span></a>
+          <a href="404.html" class="svc-jlink">Job Representation <span class="jlink-arrow">→</span></a>
+          <a href="404.html" class="svc-jlink">Presentation Skills <span class="jlink-arrow">→</span></a>
+          <a href="404.html" class="svc-jlink">Employee Community <span class="jlink-arrow">→</span></a>
+        </div>
+      </div>
+
+      <!-- Right: Image -->
+      <div class="svc-jobseeker-right reveal-from-right delay-2">
+        <div class="svc-jobseeker-img-wrapper">
+          <img src="../assets/service/service.webp" alt="Professional working on laptop - Stackly Job Seeker Services" class="svc-jobseeker-img">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FAQ Accordion Section -->
+  <section class="svc-faq-section">
+    <div class="svc-faq-container">
+
+      <h2 class="svc-faq-title reveal-from-bottom">Everything you need<br>to know</h2>
+
+      <!--
+        TWO SEPARATE FLEX COLUMNS — NOT a CSS grid.
+        This prevents the row-height-sync bug where opening
+        an item in col-1 visually "triggers" the col-2 neighbour.
+      -->
+      <div class="svc-faq-cols">
+
+        <!-- Left Column -->
+        <div class="svc-faq-col reveal-from-left delay-1">
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>What industries do you specialize in for recruitment?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>We specialize in a wide range of industries, including technology, finance, healthcare, retail, and more. Our tailored approach ensures we can adapt to any industry's unique hiring needs.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>How long does it typically take to fill a position?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>On average, our recruitment process takes 2–4 weeks, depending on the complexity of the role and the availability of qualified candidates.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>What if I'm not satisfied with the candidates?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>We are committed to your satisfaction. If the initial candidates aren't a fit, we'll work closely with you to refine the search and find the perfect match.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Do you handle temporary or contract positions?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>Yes, we provide recruitment solutions for temporary, contract, and permanent roles, helping you adapt to your changing workforce needs.</p>
+            </div>
+          </details>
+
+        </div><!-- /left col -->
+
+        <!-- Right Column -->
+        <div class="svc-faq-col reveal-from-right delay-2">
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Can you help with high-level executive recruitment?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>Yes, we have extensive experience in sourcing and placing executives and senior-level professionals who align with your company's leadership needs.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Do you offer support for onboarding new hires?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>Absolutely! Our services include seamless integration support to ensure your new team members transition smoothly and are set up for success.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Are your services customizable to our needs?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>Yes, all our services are tailored to meet your specific requirements, ensuring you receive a recruitment solution that aligns with your goals and company culture.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>What makes your recruitment process different?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>Our approach combines personalized strategies, advanced technology, and a deep understanding of your industry to deliver high-quality candidates efficiently and effectively.</p>
+            </div>
+          </details>
+
+        </div><!-- /right col -->
+
+      </div><!-- /svc-faq-cols -->
+    </div>
+
+  <!-- Client Impact Section -->
+  <section class="svc-impact-section">
+    <div class="svc-impact-container">
+      
+      <!-- Left Column: Content & Statistics -->
+      <div class="svc-impact-left reveal-from-left">
+        <span class="svc-impact-label">Our Impact</span>
+        <h2 class="svc-impact-title">Making recruitment simple, fast &amp; human</h2>
+        <p class="svc-impact-desc">
+          We bridge the gap between ambitious companies and world-class professionals. By combining deep industry expertise with modern sourcing tools, we find talent that aligns with your operational goals and corporate culture.
+        </p>
+        
+        <!-- Stats Grid -->
+        <div class="svc-impact-stats">
+          <div class="svc-stat-card">
+            <div class="svc-stat-number" data-target="98" data-suffix="%">0%</div>
+            <div class="svc-stat-label">Retention Rate</div>
+          </div>
+          <div class="svc-stat-card">
+            <div class="svc-stat-number" data-target="14" data-suffix="d">0d</div>
+            <div class="svc-stat-label">Avg. Time to Hire</div>
+          </div>
+          <div class="svc-stat-card">
+            <div class="svc-stat-number" data-target="500" data-suffix="+">0+</div>
+            <div class="svc-stat-label">Placements Made</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Image Wrapper -->
+      <div class="svc-impact-right reveal-from-right delay-2">
+        <div class="svc-impact-img-wrapper">
+          <img src="../assets/about/si_1.webp" alt="Team collaborating in a modern workspace" class="svc-impact-img">
+        </div>
+      </div>
+
+    </div>
+  <!-- Service Plans Section -->
+  <section class="svc-plans-section">
+    <div class="svc-plans-container">
+      <div class="svc-plans-header reveal-from-bottom">
+        <span class="svc-plans-label">Pricing &amp; Plans</span>
+        <h2 class="svc-plans-title">Tailored recruitment models for your business</h2>
+        <p class="svc-plans-desc">Choose a service tier that matches your hiring speed, volume, and screening requirements.</p>
+      </div>
+
+      <div class="svc-plans-grid">
+        <!-- Card 1 -->
+        <div class="svc-plan-card reveal-from-left">
+          <div class="svc-plan-badge">Standard</div>
+          <h3 class="svc-plan-name">Contingent Search</h3>
+          <p class="svc-plan-price">No upfront fee</p>
+          <p class="svc-plan-summary">Perfect for standard roles and single placements. You pay only when we find the right match.</p>
+          <ul class="svc-plan-features">
+            <li>Access to our candidate database</li>
+            <li>Pre-screened shortlist of 3-5 candidates</li>
+            <li>60-day placement guarantee</li>
+            <li>Standard background checking</li>
+          </ul>
+          <a href="contact.html" class="btn-svc-plan">Get Started</a>
+        </div>
+
+        <!-- Card 2 (Featured) -->
+        <div class="svc-plan-card featured reveal-from-bottom">
+          <div class="svc-plan-badge featured">Most Popular</div>
+          <h3 class="svc-plan-name">Retained Search</h3>
+          <p class="svc-plan-price">1/3 upfront fee</p>
+          <p class="svc-plan-summary">Ideal for high-priority leadership, executive, or highly specialized technical roles.</p>
+          <ul class="svc-plan-features">
+            <li>Dedicated recruitment team</li>
+            <li>Detailed market mapping &amp; reporting</li>
+            <li>90-day placement guarantee</li>
+            <li>Executive competency interviews</li>
+            <li>Priority candidate processing</li>
+          </ul>
+          <a href="contact.html" class="btn-svc-plan featured">Partner With Us</a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="svc-plan-card reveal-from-right">
+          <div class="svc-plan-badge">Enterprise</div>
+          <h3 class="svc-plan-name">RPO (Hiring Sprint)</h3>
+          <p class="svc-plan-price">Custom retainer</p>
+          <p class="svc-plan-summary">For rapid team builds or long-term growth phases where you need embedded recruiters.</p>
+          <ul class="svc-plan-features">
+            <li>Embedded ATS and sourcing platform</li>
+            <li>Unlimited candidates processing</li>
+            <li>120-day replacement support</li>
+            <li>Full recruitment cycle ownership</li>
+            <li>Weekly analytics &amp; audit reports</li>
+          </ul>
+          <a href="contact.html" class="btn-svc-plan">Get Custom Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keep Up To Date — Newsletter Banner -->
+  <section class="svc-keep-section">
+    <!-- Background image -->
+    <img src="../assets/service/keep.webp" alt="" class="svc-keep-bg" aria-hidden="true">
+    <!-- Dark overlay -->
+    <div class="svc-keep-overlay" aria-hidden="true"></div>
+
+    <!-- Content -->
+    <div class="svc-keep-content reveal-from-bottom">
+      <h2 class="svc-keep-title">Keep yourself up to date</h2>
+      <p class="svc-keep-desc">
+        Join our weekly Hired Stackly digest and be the first one to<br>know about new positions.
+      </p>
+
+      <form class="svc-keep-form" id="svc-keep-form" novalidate>
+        <div class="svc-input-wrapper">
+          <input
+            type="email"
+            id="svc-keep-email"
+            class="svc-keep-email-input"
+            placeholder="Enter your email"
+            required
+            aria-label="Enter your email address"
+          >
+          <button type="submit" class="btn btn-subscribe-keep">Submit</button>
+        </div>
+        <div class="svc-keep-msg" id="svc-keep-msg" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+
+  </main>
+
+  <!-- Reusable Common Footer -->
+  <div id="common-footer">
+    <footer class="site-footer" id="site-footer">
+      <div class="footer-container">
+        
+        <!-- Top Footer Main Grid -->
+        <div class="footer-top-grid">
+          
+          <!-- Column 1: Brand Logo, Desc & Social Icons -->
+          <div class="footer-col footer-col-brand">
+            <a href="../index.html" class="footer-logo-link" id="footer-logo-link">
+              <img src="../assets/logo.webp" alt="Stackly Logo" class="footer-logo" id="footer-logo-img">
+            </a>
+            <p class="footer-brand-desc">
+              Empowering companies and extraordinary talent with modern HR recruitment & executive search solutions.
+            </p>
+            
+            <!-- Popular Social Icons: LinkedIn, X, Instagram, YouTube -->
+            <div class="footer-social-links" aria-label="Social Media Links">
+              <a href="404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.77a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+                </svg>
+              </a>
+              <a href="404.html" class="social-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="404.html" class="social-icon-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div class="footer-col">
+            <h3 class="footer-col-title">Quick Links</h3>
+            <ul class="footer-nav-list">
+              <li><a href="../index.html" class="footer-link" id="footer-nav-home">Home</a></li>
+              <li><a href="about.html" class="footer-link" id="footer-nav-about">About</a></li>
+              <li><a href="service.html" class="footer-link active" id="footer-nav-service">Service</a></li>
+              <li><a href="blog.html" class="footer-link" id="footer-nav-blog">Blog</a></li>
+              <li><a href="contact.html" class="footer-link" id="footer-nav-contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Solutions -->
+          <div class="footer-col">
+            <h3 class="footer-col-title">Solutions</h3>
+            <ul class="footer-nav-list">
+              <li><a href="404.html" class="footer-link">Executive Search</a></li>
+              <li><a href="404.html" class="footer-link">Contract Staffing</a></li>
+              <li><a href="404.html" class="footer-link">Direct Hire</a></li>
+              <li><a href="404.html" class="footer-link">RPO Advisory</a></li>
+              <li><a href="404.html" class="footer-link">Tech Sourcing</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Stay Updated -->
+          <div class="footer-col footer-col-subscribe">
+            <h3 class="footer-col-title">Stay Updated</h3>
+            <p class="footer-subscribe-desc">
+              Get weekly tech talent insights & market salary reports.
+            </p>
+            
+            <form class="footer-subscribe-form" id="footer-subscribe-form" novalidate>
+              <div class="input-wrapper">
+                <input 
+                  type="email" 
+                  id="footer-email-input" 
+                  class="footer-email-input" 
+                  placeholder="Enter your email" 
+                  required 
+                  aria-label="Enter your email address"
+                >
+                <button type="submit" class="btn btn-subscribe">Subscribe</button>
+              </div>
+              <div class="form-feedback-msg" id="footer-form-msg" aria-live="polite"></div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Bottom Legal Row -->
+        <div class="footer-bottom-row">
+          <div class="footer-legal-links">
+            <a href="404.html" class="footer-legal-link">Privacy Policy</a>
+            <a href="404.html" class="footer-legal-link">Terms of Service</a>
+            <a href="404.html" class="footer-legal-link">Security</a>
+          </div>
+          <div class="footer-copyright">
+            &copy; 2026 Stackly Recruitment Agency. All rights reserved.
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/common.js"></script>
+  <script src="../js/service.js"></script>
+</body>
+</html>
