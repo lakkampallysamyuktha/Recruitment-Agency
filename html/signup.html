@@ -358,6 +358,15 @@
             box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.08);
         }
 
+        /* Fix for browser autofill background */
+        .auth-input:-webkit-autofill,
+        .auth-input:-webkit-autofill:hover, 
+        .auth-input:-webkit-autofill:focus, 
+        .auth-input:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s;
+            -webkit-text-fill-color: var(--color-charcoal) !important;
+        }
+
         /* Password wrapper */
         .auth-input-wrapper {
             position: relative;
