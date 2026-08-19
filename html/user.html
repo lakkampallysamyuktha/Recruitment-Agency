@@ -1914,6 +1914,8 @@
             };
 
             function navigateTo(pageId) {
+                document.getElementById('mainContent').scrollTo(0, 0);
+                window.scrollTo(0, 0);
                 Object.values(pages).forEach(p => p.classList.add('hidden'));
 
                 if (pages[pageId]) {

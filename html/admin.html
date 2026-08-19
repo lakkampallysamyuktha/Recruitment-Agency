@@ -2031,6 +2031,8 @@
             };
 
             function navigateTo(pageId) {
+                document.getElementById('mainContent').scrollTo(0, 0);
+                window.scrollTo(0, 0);
                 pages.forEach(page => {
                     if (page.id === `page-${pageId}`) {
                         page.classList.remove('hidden');
