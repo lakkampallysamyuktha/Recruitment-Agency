@@ -1586,7 +1586,7 @@ html, body {
 
 .innovation-card:hover .innovation-card-text {
   transform: translateY(-3px);
-  color: #F9B171;
+  color: var(--color-burgundy);
 }
 
 /* Responsive adjustment for Innovation Grid */

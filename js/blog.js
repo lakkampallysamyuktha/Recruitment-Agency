@@ -22,13 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Trending Topics — Category Item Interactive Toggle */
   const topicItems = document.querySelectorAll('.trending-topic-item');
   const featuredTitle = document.querySelector('.trending-card-title');
+  const featuredImg = document.querySelector('.trending-featured-img');
 
   // Sample data to simulate content switching
   const topicData = {
-    "01": "How leadership styles are evolving for modern remote workplaces",
-    "02": "Strategies to build an inclusive workforce and foster belonging",
-    "03": "Best practices for onboarding remote employees successfully",
-    "04": "Addressing workplace burnout and building emotional resilience"
+    "01": { title: "How leadership styles are evolving for modern remote workplaces", img: "../assets/home/leader_img.webp" },
+    "02": { title: "Strategies to build an inclusive workforce and foster belonging", img: "../assets/blog/insights_2.webp" },
+    "03": { title: "Best practices for onboarding remote employees successfully", img: "../assets/blog/popular_2.webp" },
+    "04": { title: "Addressing workplace burnout and building emotional resilience", img: "../assets/blog/latest_3.webp" }
   };
 
   if (topicItems.length > 0 && featuredTitle) {
@@ -44,12 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const numberSpan = item.querySelector('.topic-number');
         if (numberSpan) {
           const key = numberSpan.textContent.trim();
-          if (topicData[key]) {
+          const data = topicData[key];
+          if (data) {
             // Fade effect simulation
             featuredTitle.style.opacity = '0';
+            if (featuredImg) featuredImg.style.opacity = '0.4';
+            
             setTimeout(() => {
-              featuredTitle.textContent = topicData[key];
+              featuredTitle.textContent = data.title;
               featuredTitle.style.opacity = '1';
+              
+              if (featuredImg) {
+                featuredImg.src = data.img;
+                featuredImg.style.opacity = '1';
+              }
             }, 200);
           }
         }

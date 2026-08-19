@@ -802,10 +802,7 @@
         <div class="auth-split-image">
             <img src="../assets/home/login.webp" alt="Team collaboration at Stackly" loading="lazy" />
             <div class="auth-image-overlay">
-                <div class="brand-mark">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span>Stackly</span>
-                </div>
+               
                 <p class="tagline">Find your next career move with confidence.</p>
                 <p class="sub-tagline">Join thousands of professionals and companies already growing with Stackly.</p>
             </div>
@@ -948,6 +945,13 @@
     SCRIPT
     ========================================== -->
     <script>
+        // Force refresh if loaded from bfcache (e.g. Back button)
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                window.location.reload();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
 
             // ============================
